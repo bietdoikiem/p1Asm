@@ -20,10 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca9fdf7e-7332-4587-9db2-f10816622dd4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/RMIT/Interaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/RMIT/Lead.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/RMIT/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/RMIT/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +85,7 @@
       <updated>1598424648132</updated>
       <workItem from="1598424649407" duration="2368000" />
       <workItem from="1598450080316" duration="2311000" />
-      <workItem from="1598495059831" duration="443000" />
+      <workItem from="1598495059831" duration="1114000" />
     </task>
     <servers />
   </component>
