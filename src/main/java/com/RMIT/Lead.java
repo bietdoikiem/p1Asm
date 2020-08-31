@@ -2,6 +2,7 @@ package com.RMIT;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
+
 import java.util.Date;
 
 public class Lead {
@@ -31,7 +32,7 @@ public class Lead {
 
     // write object to CSV file
     public Lead(String name, Date DOB, Boolean gender, String phone, String email, String address) {
-        this.id = "lead_00" + Math.floor(100*Math.random());
+        this.id = "lead_" + Generator.generateLeadId();
         this.name = name;
         this.DOB = DOB;
         this.gender = gender;
@@ -41,15 +42,7 @@ public class Lead {
     }
 
     // parse object from CSV file
-    public Lead(String id, String name, Date DOB, Boolean gender, String phone, String email, String address) {
-        this.id = id;
-        this.name = name;
-        this.DOB = DOB;
-        this.gender = gender;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-    }
+
 
     public String getId() {
         return this.id;
