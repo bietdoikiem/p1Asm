@@ -50,7 +50,7 @@ public class CSVManager  {
             err.printStackTrace();
         }
     }
-    public void writeLead(Lead lead) {
+    public void writeLead() {
         try ( //
               Writer writer = Files.newBufferedWriter(Paths.get("src/main/resources/leads.csv"), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
@@ -67,7 +67,7 @@ public class CSVManager  {
             err.printStackTrace();
         }
     }
-    public void readLead() {
+    public void getLeadAll() {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get("src/main/resources/leads.csv"))
                 ) {
@@ -96,7 +96,7 @@ public class CSVManager  {
             err.printStackTrace();
         }
     }
-    public void readLastId() {
+    public static Integer getLastLeadId() {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get("src/main/resources/leads.csv"))
         ) {
@@ -115,10 +115,15 @@ public class CSVManager  {
                 Lead lead = csvLeadIterator.next();
                  lastId = lead.getId();
             }
-            System.out.println("The last Id: " + lastId);
+            String[] strArray = lastId.split("_");
+            Integer intId = Integer.parseInt(strArray[1]);
+            return intId;
         } catch(IOException err) {
             err.printStackTrace();
+        } catch(IndexOutOfBoundsException err) {
+            return 0;
         }
+        return 0;
     }
 
 }
