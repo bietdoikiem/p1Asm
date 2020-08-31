@@ -54,12 +54,12 @@ public class Interaction {
     // Convert string input to date
     public static Date Str_Date(String input) throws ParseException {
         // listing the available date format
-        SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat formatter2=new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter1=new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatter3=new SimpleDateFormat("MM dd, yyyy");
         SimpleDateFormat formatter4=new SimpleDateFormat("E, MM dd yyyy");
         SimpleDateFormat formatter5=new SimpleDateFormat("E, MM dd yyyy HH:mm:ss");
-        SimpleDateFormat formatter6=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter6=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // create array of format
         SimpleDateFormat[] formats = new SimpleDateFormat[6];
         formats[0] = formatter1;
