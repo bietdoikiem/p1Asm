@@ -50,7 +50,7 @@ public class CSVManager  {
             err.printStackTrace();
         }
     }
-    public void writeLead(String name, String DOB, String gender, String phone, String email, String address) {
+    public void writeLead(Lead lead) {
         try ( //
               Writer writer = Files.newBufferedWriter(Paths.get("src/main/resources/leads.csv"), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
