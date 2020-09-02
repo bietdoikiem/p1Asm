@@ -1,2 +1,3 @@
 id,name,DOB,gender,phone,email,address
-lead_002,Kha No.1 Hehe,2001-01-17,false,0702599935,kittybui@gmail.com,312 Ly Thuong Kiet
+lead_001,Minh,0030-01-22,true,0934717924,minhlucky2408@gmail.com,1002 Ta Quang Buu
+lead_002,Kha,0022-06-24,false,0702599935,buithuykha@gmail.com,352 Ly Thuong Kiet

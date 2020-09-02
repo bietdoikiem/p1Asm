@@ -33,23 +33,41 @@ public class CSVManager  {
     public void print() {
         System.out.println("CSVManager called");
     }
-    public void addFile() {
-        try ( // Parenthesis try block to close stream resource after utilized
-            Writer writer = Files.newBufferedWriter(Paths.get("src/main/resources/leads.csv"));
+    public void addFile(String type) {
+        if(type.equals("lead")) {
+            try ( // Parenthesis try block to close stream resource after utilized
+                  Writer writer = Files.newBufferedWriter(Paths.get("src/main/resources/leads.csv"));
 
-            CSVWriter csvWriter = new CSVWriter(writer,
-                    CSVWriter.DEFAULT_SEPARATOR,
-                    CSVWriter.NO_QUOTE_CHARACTER,
-                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                    CSVWriter.DEFAULT_LINE_END);
+                  CSVWriter csvWriter = new CSVWriter(writer,
+                          CSVWriter.DEFAULT_SEPARATOR,
+                          CSVWriter.NO_QUOTE_CHARACTER,
+                          CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                          CSVWriter.DEFAULT_LINE_END);
             ) {
-            String[] headerRecord = {"id", "name", "DOB", "gender", "phone", "email", "address"};
-            csvWriter.writeNext(headerRecord);
-            //System.out.println("CSVManager has initialized csv file with headers");
-            // csvWriter.writeNext(new String[]{"lead_001", "Minh Ng", "2001-08-24", "true", "0934717924", "minhlucky2408@gmail.com", "1002 Ta Quang Buu"});
-        }
-        catch (IOException err) {
-            err.printStackTrace();
+                String[] headerRecord = {"id", "name", "DOB", "gender", "phone", "email", "address"};
+                csvWriter.writeNext(headerRecord);
+                //System.out.println("CSVManager has initialized csv file with headers");
+                // csvWriter.writeNext(new String[]{"lead_001", "Minh Ng", "2001-08-24", "true", "0934717924", "minhlucky2408@gmail.com", "1002 Ta Quang Buu"});
+            } catch (IOException err) {
+                err.printStackTrace();
+            }
+        } else if (type.equals("interaction")) {
+            try ( // Parenthesis try block to close stream resource after utilized
+                  Writer writer = Files.newBufferedWriter(Paths.get("src/main/resources/interactions.csv"));
+
+                  CSVWriter csvWriter = new CSVWriter(writer,
+                          CSVWriter.DEFAULT_SEPARATOR,
+                          CSVWriter.NO_QUOTE_CHARACTER,
+                          CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                          CSVWriter.DEFAULT_LINE_END);
+            ) {
+                String[] headerRecord = {"id", "DOI", "lead", "mean", "potential"};
+                csvWriter.writeNext(headerRecord);
+                //System.out.println("CSVManager has initialized csv file with headers");
+                // csvWriter.writeNext(new String[]{"lead_001", "Minh Ng", "2001-08-24", "true", "0934717924", "minhlucky2408@gmail.com", "1002 Ta Quang Buu"});
+            } catch (IOException err) {
+                err.printStackTrace();
+            }
         }
     }
     public void addLead(Lead lead) {
@@ -187,7 +205,7 @@ public class CSVManager  {
                 }
             }
             if (foundLead != null) {
-                addFile(); // Recreating CSV file for overwriting new modified data.
+                addFile("lead"); // Recreating CSV file for overwriting new modified data.
                 ColumnPositionMappingStrategy<Lead> strategy = new ColumnPositionMappingStrategy<Lead>();
                 strategy.setType(Lead.class);
                 String[] memberFieldsToBindTo = {"id", "name", "DOB", "gender", "phone", "email", "address"};
@@ -232,7 +250,7 @@ public class CSVManager  {
                 }
             }
             if (foundLead != null) {
-                addFile(); // Recreating CSV file for overwriting new modified data.
+                addFile("lead"); // Recreating CSV file for overwriting new modified data.
                 myLeads.remove(foundLead);
                 ColumnPositionMappingStrategy<Lead> strategy = new ColumnPositionMappingStrategy<Lead>();
                 strategy.setType(Lead.class);
