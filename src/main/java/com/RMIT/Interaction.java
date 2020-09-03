@@ -1,25 +1,40 @@
 package com.RMIT;
+import com.opencsv.bean.CsvBindByName;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
 public class Interaction {
+    @CsvBindByName(column = "id", required = true)
     private String id;
+
+    @CsvBindByName(column = "DOI", required = true)
     private Date DOI;
+
+    @CsvBindByName(column = "lead", required = true)
     private Lead lead;
+
+    @CsvBindByName(column = "mean", required = true)
     private String mean;
+
+    @CsvBindByName(column = "potential", required = true)
     private String potential;
 
     public Interaction() {}
 
     public Interaction(Date DOI, Lead lead, String mean, String potential) {
+        this.id = "inter_" + Math.floor(100*Math.random());
         this.DOI = DOI;
         this.lead = lead;
         this.mean = mean;
         this.potential = potential;
     }
 
+    public String getId() {
+        return id;
+    }
     public Date getDOI() {
         return DOI;
     }
@@ -50,38 +65,5 @@ public class Interaction {
 
     public void setPotential(String potential) {
         this.potential = potential;
-    }
-    // Convert string input to date
-    public static Date Str_Date(String input) throws ParseException {
-        // listing the available date format
-        SimpleDateFormat formatter1=new SimpleDateFormat("yyyy/MM/dd");
-        SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat formatter3=new SimpleDateFormat("MM dd, yyyy");
-        SimpleDateFormat formatter4=new SimpleDateFormat("E, MM dd yyyy");
-        SimpleDateFormat formatter5=new SimpleDateFormat("E, MM dd yyyy HH:mm:ss");
-        SimpleDateFormat formatter6=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // create array of format
-        SimpleDateFormat[] formats = new SimpleDateFormat[6];
-        formats[0] = formatter1;
-        formats[1] = formatter2;
-        formats[2] = formatter3;
-        formats[3] = formatter4;
-        formats[4] = formatter5;
-        formats[5] = formatter6;
-        Date data = null;
-        Date data2 =null;
-        // Iterate through Datr format, match input with the right one and convert it to Date
-        for (int i=0; i<formats.length;i++){
-            try{
-                data2 = data;
-                data = formats[i].parse(input);
-            }catch (ParseException exception){
-                data = data2;
-            }
-        }
-
-        return data;
-
-
     }
 }
