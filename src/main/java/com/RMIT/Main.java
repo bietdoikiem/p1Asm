@@ -5,8 +5,9 @@ package com.RMIT;
 public class Main {
 
     public static void main(String[] args) {
-        Menu.getInstance().updateLead();
-
+        Menu.getInstance().Input_lead();
+//        Menu.getInstance().updateLead();
+//        Menu.getInstance().DeleteLead();
 //        CSVManager csvmanager = CSVManager.getInstance();
 //        csvmanager.print();
 //        csvmanager.addFile("lead");

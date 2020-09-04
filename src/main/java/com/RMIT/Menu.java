@@ -34,6 +34,7 @@ public class Menu {
 //        new_lead.setPhone(phone);
 
         CSVManager.getInstance().addLead(new_lead);
+        Continue();
 
     }
 
@@ -99,7 +100,10 @@ public class Menu {
                 }
                 CSVManager.getInstance().updateLead(Id,Name,Dob,gender,phone,email,address);
             }
+
         }
+        Continue();
+
 
 //        System.out.println();
 //        System.out.println();
@@ -109,6 +113,8 @@ public class Menu {
         System.out.println("enter the id of lead to delete");
         String Id = sys_in.nextLine();
         CSVManager.getInstance().deleteLead(Id);
+        Continue();
+
 
     }
 
@@ -215,6 +221,44 @@ public class Menu {
                 in_address = sys_in.nextLine();
 
             }
+        }
+    }
+
+    private static void Continue(){
+        System.out.println("Do you want to continue use the system ? , type yes for continue type no for quitting");
+        String bool = sys_in.nextLine().toLowerCase();
+        if (bool.equals("yes")) {
+            System.out.println("Please choose a function you want to continue, one character input only:");
+            System.out.println("Type 1 for adding a new leads");
+            System.out.println("Type 2 for update an existed leads");
+            System.out.println("Type 3 for delete an leads");
+            String order = sys_in.nextLine();
+            if (order.length() == 1){
+                switch (order){
+                    case "1":
+                        Menu.getInstance().Input_lead();
+                        break;
+                    case "2":
+                        Menu.getInstance().updateLead();
+                        break;
+                    case "3":
+                        Menu.getInstance().DeleteLead();
+                        break;
+                }
+            }else {
+                System.out.println("The order have invalid length, your input should only contains a numbers.");
+                Continue();
+
+            }
+        }else {
+            if (bool.equals("no")){
+                System.exit(0);
+                System.out.println("Quited...");
+            } else {
+                System.out.println("Your input is invalid, yes or no only, please type again");
+                Continue();
+            }
+
         }
     }
 
