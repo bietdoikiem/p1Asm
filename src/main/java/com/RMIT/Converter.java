@@ -19,11 +19,13 @@ public class Converter {
         SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatter2=new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat formatter3=new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat formatter4=new SimpleDateFormat("dd/MM/yyyy");
         // create array of format
-        SimpleDateFormat[] formats = new SimpleDateFormat[3];
+        SimpleDateFormat[] formats = new SimpleDateFormat[4];
         formats[0] = formatter1;
         formats[1] =formatter2;
         formats[2] = formatter3;
+        formats[3] = formatter4;
         Date data = null;
         Date data2 =null;
         // Iterate through Datr format, match input with the right one and convert it to Date

@@ -1,11 +1,14 @@
 package com.RMIT;
 
-
+import java.util.Date;
 
 public class Main {
 
     public static void main(String[] args) {
-        Menu.getInstance().Input_lead();
+//        Menu.getInstance().Input_lead();
+        Date newDate = Menu.input_DOB();
+        System.out.println(Converter.DateToStr(newDate));
+
 //        Menu.getInstance().updateLead();
 //        Menu.getInstance().DeleteLead();
 //        CSVManager csvmanager = CSVManager.getInstance();

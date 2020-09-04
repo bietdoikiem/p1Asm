@@ -127,7 +127,7 @@ public class Menu {
         return lead_name;
     }
 
-    private static Date input_DOB(){
+    public static Date input_DOB(){
         // first time input date of birth
         // Validate input day
         boolean dayValid = false;
@@ -139,7 +139,7 @@ public class Menu {
             boolean Valid1 = false;
             boolean Valid2 = false;
             for (int i = 0; i<day.length();i++){
-                if (day.charAt(i) < '9' & day.charAt(i) > '1') { // if the character of input are between 1-9
+                if (day.charAt(i) <= '9' & day.charAt(i) >= '0') { // if the character of input are between 1-9
                     Valid1 = true;
                 }else { // if the valid input
                     System.out.println("The input contains invalid characters");
@@ -153,10 +153,11 @@ public class Menu {
                 Valid2 = true;
             }
             dayValid = Valid1&Valid2;
+
         }
 
 
-        String pday = null;
+        String pday = day;
         if(day.length() == 1){
             pday = "0"+day;
         }
@@ -165,14 +166,13 @@ public class Menu {
         boolean monValid = false;
         String mon = null;
         while (!monValid){ // get and validate the input of day
-            System.out.println("Lead Date of Birth by input these information : ");
-            System.out.print("Day : ");
-            day = sys_in.nextLine();
+            System.out.print("Month : ");
+            mon = sys_in.nextLine();
             boolean Validmon1 = false;
             boolean Validmon2 = false;
             for (int i = 0; i<day.length();i++){
                 if (day.charAt(i) <= '9' & day.charAt(i) >= '0') { // if the character of input are between 1-9
-                    Valid1 = true;
+                    Validmon1 = true;
                 }else { // if the valid input
                     System.out.println("The input contains invalid characters");
                     Validmon1 = false;
@@ -188,7 +188,7 @@ public class Menu {
         }
 
 
-        String pmon = null;
+        String pmon = mon;
         if(mon.length() == 1){
             pmon = "0"+day;
         }
@@ -202,13 +202,12 @@ public class Menu {
         boolean yearValid = false;
         String year = null;
         while (!yearValid){ // get and validate the input of day
-            System.out.println("Lead Date of Birth by input these information : ");
-            System.out.print("Day : ");
+            System.out.print("Year : ");
             year = sys_in.nextLine();
             boolean Validy1 = false;
             boolean Validy2 = false;
             for (int i = 0; i<day.length();i++){
-                if (year.charAt(i) < '9' & year.charAt(i) > '1') { // if the character of input are between 1-9
+                if (year.charAt(i) <= '9' & year.charAt(i) >= '0') { // if the character of input are between 1-9
                     Validy1 = true;
                 }else { // if the valid input
                     System.out.println("The input contains invalid characters");
@@ -223,12 +222,14 @@ public class Menu {
                 System.out.println("invalid year input");
                 Validy2 = false;
             }
-            dayValid = Validy1&Validy2;
+            yearValid = Validy1&Validy2;
         }
 
 
-        String DateParse = year+"-"+mon+"-"+day;
-        Date DOB = Converter.DateToStr(DateParse);
+        String DateParse = pday+"/"+pmon+"/"+year;
+        System.out.println(DateParse);
+        Date DOB = Converter.StrToDate(DateParse);
+
 
 
         return DOB;
