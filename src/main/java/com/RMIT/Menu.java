@@ -1,5 +1,6 @@
 package com.RMIT;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -128,21 +129,108 @@ public class Menu {
 
     private static Date input_DOB(){
         // first time input date of birth
-        System.out.print("Lead Date of Birth : ");
-        String Dob = sys_in.nextLine();
-        System.out.println(" ");
-        Date DOB = Converter.StrToDate(Dob);
-
-        // loop until got the right Date of birth.
-        while(DOB == null){
-            System.out.println("Invalid input for date of birth \n you should retype the date as one of these form " +
-                    "\n yyyy/MM/dd" + "\n yyyy-MM-dd" + "\n MM dd, yyyy" +"\n E, MM dd yyyy"+ "\n E, MM dd yyyy HH:mm:ss" +
-                    "\n yyyy-MM-dd HH:mm:ss" + "\n dd/MM/yyyy" + "\n dd-MM-yyyy");
-            System.out.print("Lead Date of Birth : ");
-            Dob = sys_in.nextLine();
-            System.out.println(" ");
-            DOB = Converter.StrToDate(Dob);
+        // Validate input day
+        boolean dayValid = false;
+        String day = null;
+        while (!dayValid){ // get and validate the input of day
+            System.out.println("Lead Date of Birth by input these information : ");
+            System.out.print("Day : ");
+            day = sys_in.nextLine();
+            boolean Valid1 = false;
+            boolean Valid2 = false;
+            for (int i = 0; i<day.length();i++){
+                if (day.charAt(i) < '9' & day.charAt(i) > '1') { // if the character of input are between 1-9
+                    Valid1 = true;
+                }else { // if the valid input
+                    System.out.println("The input contains invalid characters");
+                    Valid1 = false;
+                    break;
+                }
+            }
+            if (day.length() > 2 & Integer.parseInt(day) > 31 & Integer.parseInt(day) != 0 ){
+                System.out.println("Your Day input is invalid, the input should be an integer smaller than 32");
+            }else {
+                Valid2 = true;
+            }
+            dayValid = Valid1&Valid2;
         }
+
+
+        String pday = null;
+        if(day.length() == 1){
+            pday = "0"+day;
+        }
+
+        // Validate month input
+        boolean monValid = false;
+        String mon = null;
+        while (!monValid){ // get and validate the input of day
+            System.out.println("Lead Date of Birth by input these information : ");
+            System.out.print("Day : ");
+            day = sys_in.nextLine();
+            boolean Validmon1 = false;
+            boolean Validmon2 = false;
+            for (int i = 0; i<day.length();i++){
+                if (day.charAt(i) <= '9' & day.charAt(i) >= '0') { // if the character of input are between 1-9
+                    Valid1 = true;
+                }else { // if the valid input
+                    System.out.println("The input contains invalid characters");
+                    Validmon1 = false;
+                    break;
+                }
+            }
+            if (day.length() > 2 & Integer.parseInt(day) > 12 & Integer.parseInt(day) != 0 ){
+                System.out.println("Your month input is invalid, the input should be an integer smaller than 13");
+            }else {
+                Validmon2 = true;
+            }
+            monValid = Validmon1&Validmon2;
+        }
+
+
+        String pmon = null;
+        if(mon.length() == 1){
+            pmon = "0"+day;
+        }
+
+
+        // Validate year input
+
+        int curYear = Calendar.getInstance().get(Calendar.YEAR); // get the current year
+        int borderDownYear = curYear - 13; // the youngest customer should be at age of 12
+        int borderUpYear = curYear - 105; // We want to make sure the customer is alive
+        boolean yearValid = false;
+        String year = null;
+        while (!yearValid){ // get and validate the input of day
+            System.out.println("Lead Date of Birth by input these information : ");
+            System.out.print("Day : ");
+            year = sys_in.nextLine();
+            boolean Validy1 = false;
+            boolean Validy2 = false;
+            for (int i = 0; i<day.length();i++){
+                if (year.charAt(i) < '9' & year.charAt(i) > '1') { // if the character of input are between 1-9
+                    Validy1 = true;
+                }else { // if the valid input
+                    System.out.println("The input contains invalid characters");
+                    Validy1 = false;
+                    break;
+                }
+            }
+            // check if the customer in the valid range of year 13-105 and the validity of the input length
+            if (year.length() == 4 & Integer.parseInt(year) > borderUpYear & Integer.parseInt(year) < borderDownYear){
+                Validy2 = true;
+            }else {
+                System.out.println("invalid year input");
+                Validy2 = false;
+            }
+            dayValid = Validy1&Validy2;
+        }
+
+
+        String DateParse = year+"-"+mon+"-"+day;
+        Date DOB = Converter.DateToStr(DateParse);
+
+
         return DOB;
     }
 
