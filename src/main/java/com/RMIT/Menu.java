@@ -19,8 +19,97 @@ public class Menu {
 
     // design input_lead phase here.
     public void Input_lead(){
+        String Name = input_name();
+        String phone = input_phone();
+        Date DOB = input_DOB();
+        boolean gender = input_gend();
+        String email = input_email();
+        String address = input_address();
+        Lead new_lead = new Lead(Name,DOB,gender,phone,email,address);
+//        new_lead.setEmail(email);
+//        new_lead.setName(Name);
+//        new_lead.setGender(gender);
+//        new_lead.setAddress(address);
+//        new_lead.setDOB(DOB);
+//        new_lead.setPhone(phone);
 
-        String phone = null;
+        CSVManager.getInstance().addLead(new_lead);
+
+    }
+
+    // Phase for Update Lead
+    public void updateLead(){
+        // get the id of lead need to update
+        System.out.println("Type in ID of list to update");
+        String Id = sys_in.nextLine();
+        Lead Lead_c = CSVManager.getInstance().getLead(Id);
+        if (Lead_c == null){
+            System.out.println("ID not exists ");
+        }else {
+            String Name = Lead_c.getName();
+            String phone = Lead_c.getPhone();
+            String email = Lead_c.getEmail();
+            String address = Lead_c.getAddress();
+            boolean gender = Lead_c.getGender();
+            String str_gend = "male";
+            if (gender == false){
+                str_gend = "female";
+            }
+            Date Dob = Lead_c.getDOB();
+            // print the guidance for input the features to updates
+            System.out.println("let choose features needed to update ");
+            System.out.println("Type 1 for Name "+Name);
+            System.out.println("Type 2 for Date of birth "+ Converter.DateToStr(Dob));
+            System.out.println("Type 3 for Phone "+ phone);
+            System.out.println("Type 4 for email "+ email);
+            System.out.println("Type 5 for address "+ address);
+            System.out.println("Type 6 for gender " +str_gend );
+            System.out.print(" Type your order here: ");
+            System.out.println(" ");
+            String orderIn = sys_in.nextLine(); // get the list of features to updates
+
+            // get the validated list of order
+            String[] order_validated = Validator.getInstance().GetValidatedLeadOrder(orderIn);
+            if (order_validated[0].equals("false")){ // if the order is invalid print message
+                System.out.println(order_validated[1]);
+
+            }else { // the order is valid
+                for (int i = 0;i < orderIn.length();i++){
+                    String orderCase = String.valueOf(orderIn.charAt(i)) ;
+                    switch (orderCase){
+                        case "1" :
+                            Name = input_name();
+                            break;
+                        case "2":
+                            Dob = input_DOB();
+                            break;
+                        case "3":
+                            phone = input_phone();
+                            break;
+                        case "4":
+                            email = input_email();
+                            break;
+                        case "5":
+                            address = input_address();
+                            break;
+                        case "6":
+                            gender = input_gend();
+                            break;
+                    }
+                }
+                CSVManager.getInstance().updateLead(Id,Name,Dob,gender,phone,email,address);
+            }
+        }
+
+//        System.out.println();
+//        System.out.println();
+    }
+
+    public void DeleteLead(){
+        System.out.println("enter the id of lead to delete");
+        String Id = sys_in.nextLine();
+        CSVManager.getInstance().deleteLead(Id);
+
     }
 
     private static String input_name(){
@@ -59,12 +148,14 @@ public class Menu {
         // loop until got the right input
         while (true){
             gender = sys_in.nextLine().toLowerCase();
+            System.out.println(gender);
             System.out.println(" ");
-            if  (gender == "male"){
+            if  (gender.equals("male")){
                 gend = true;
+                System.out.println("it worked");
                 break;
             }
-            if (gender == "female"){
+            if (gender.equals("female")){
                 gend = false;
                 break;
             }
@@ -111,11 +202,11 @@ public class Menu {
     }
 
     private static String input_address(){
-        System.out.print("Lead email : ");
+        System.out.print("Lead adđress : ");
         String in_address = sys_in.nextLine();
         System.out.println(" ");
         while (true){
-            if (Validator.getInstance().get_email_validated(in_address)[1] == "true"){
+            if (Validator.getInstance().get_validated_address(in_address)[1] == "true"){
                 return in_address;
             }
             else {
