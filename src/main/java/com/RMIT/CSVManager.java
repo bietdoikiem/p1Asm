@@ -98,11 +98,13 @@ public class CSVManager  {
                 Lead lead = csvLeadIterator.next();
                 if (lead.getId().equals(id)) {
                     foundLead = lead;
+                    break;
                 }
             }
             String leadId = foundLead.getId();
             if(leadId != null) {
                 System.out.println("Lead is found");
+                return foundLead;
             }
         } catch(NullPointerException | IOException err) {
             System.out.println("No ID Found");
@@ -327,6 +329,7 @@ public class CSVManager  {
             String interId = foundInter.getId();
             if(interId != null) {
                 System.out.println("Lead is found");
+                return foundInter;
             }
             return foundInter;
         } catch(NullPointerException | IOException err) {
