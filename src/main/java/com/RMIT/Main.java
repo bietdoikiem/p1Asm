@@ -19,5 +19,8 @@ public class Main {
 //        Lead lead2 = new Lead("Kha", Converter.StrToDate("2001-01-17"), false, "0702599935", "buithuykha@gmail.com", "352 Ly Thuong Kiet");
 //        csvmanager.addLead(lead2);
 //        csvmanager.addFile("interaction");
+        // call functions here
+        CSVManager csvmanager = CSVManager.getInstance();
+        csvmanager.print();
     }
 }
