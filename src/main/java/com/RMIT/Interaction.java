@@ -1,8 +1,8 @@
 package com.RMIT;
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 
 import java.util.Date;
 
@@ -11,10 +11,13 @@ public class Interaction {
     private String id;
 
     @CsvBindByName(column = "DOI", required = true)
+    @CsvDate(value="yyyy-MM-dd") // Annotation to parse Date format.
     private Date DOI;
 
-    @CsvBindByName(column = "lead", required = true)
-    private Lead lead;
+    @CsvBindByName(column = "leadId", required = true)
+    private String leadId;
+
+    //private Lead lead; // Object referencing of lead
 
     @CsvBindByName(column = "mean", required = true)
     private String mean;
@@ -24,10 +27,10 @@ public class Interaction {
 
     public Interaction() {}
 
-    public Interaction(Date DOI, Lead lead, String mean, String potential) {
-        this.id = "inter_" + Math.floor(100*Math.random());
+    public Interaction(Date DOI, String leadId, String mean, String potential) {
+        this.id = "inter_" + Generator.generateInterIdNumber();
         this.DOI = DOI;
-        this.lead = lead;
+        this.leadId = leadId;
         this.mean = mean;
         this.potential = potential;
     }
@@ -43,13 +46,21 @@ public class Interaction {
         this.DOI = DOI;
     }
 
-    public Lead getLead() {
+    public String getLeadId() {
+        return leadId;
+    }
+
+    public void setLeadId(String leadId) {
+        this.leadId = leadId;
+    }
+
+    /*public Lead getLeadRef() {
         return lead;
     }
 
-    public void setLead(Lead lead) {
+    public void setLeadRef(Lead lead) {
         this.lead = lead;
-    }
+    }*/
 
     public String getMean() {
         return mean;
