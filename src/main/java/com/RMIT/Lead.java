@@ -32,7 +32,7 @@ public class Lead {
 
     // write object to CSV file
     public Lead(String name, Date DOB, Boolean gender, String phone, String email, String address) {
-        this.id = "lead_" + Generator.generateLeadId();
+        this.id = "lead_" + Generator.generateLeadIdNumber();
         this.name = name;
         this.DOB = DOB;
         this.gender = gender;
