@@ -21,6 +21,7 @@ public class InputGetter {
     // create and adding new leads
     Lead new_lead = new Lead(Name,DOB,gender,phone,email,address);
     CSVManager.getInstance().addLead(new_lead);
+    Continue();
 
     // ask user to continue or quit
 
@@ -90,6 +91,7 @@ public class InputGetter {
                 CSVManager.getInstance().updateLead(Id,Name,Dob,gender,phone,email,address);
             }
         }
+        Continue();
 
     }
 
@@ -97,6 +99,7 @@ public class InputGetter {
         System.out.println("Enter the id of lead to delete"); // get the ID from user
         String Id = sys_in.nextLine();
         CSVManager.getInstance().deleteLead(Id);
+        Continue();
     }
 
     public static String inputName(){ // Valid the name of the lead by make sure it only contains letter from a-z
@@ -323,7 +326,7 @@ public class InputGetter {
 
         Interaction thisInteraction = new Interaction(DOI,Id,mean,potential); // create and add new interaction
         CSVManager.getInstance().addInter(thisInteraction);
-
+        Continue();
 
     }
 
@@ -552,6 +555,7 @@ public class InputGetter {
             }
 
         }
+        Continue();
 
 
     }
@@ -579,6 +583,55 @@ public class InputGetter {
         System.out.println("please type in the interID to delete");
         String InterID = sys_in.nextLine();
         CSVManager.getInstance().deleteInter(InterID);
+        Continue();
+
+    }
+
+    private static void Continue(){
+        System.out.println("Do you want to continue use the system ? , type yes for continue type no for quitting");
+        String bool = sys_in.nextLine().toLowerCase();
+        if (bool.equals("yes")) {
+            System.out.println("Please choose a function you want to continue, one character input only:");
+            System.out.println("Type 1 for go back to the Main menu");
+            System.out.println("Type 2 for go to the Lead Manager Page");
+            System.out.println("Type 3 for go to the Interaction Manager Page");
+            System.out.println("Type 4 for go to the Report Manager Page");
+            System.out.println("Type 0 quit");
+            String order = sys_in.nextLine();
+            if (order.length() == 1){ // using switch to activate a function at a time when user chose the function to activate
+                switch (order){
+                    case "1":
+                        Menu.MainMenu(0);
+                        break;
+                    case "2":
+                        MenuLead.MainMenu(0);
+                        break;
+                    case "3":
+                        MenuInter.MainMenu(0);
+                        break;
+                    case "4":
+                        MenuReport.MainMenu(0);
+                        break;
+                    case "0":
+                        System.out.println("Thanks for your work,bye");
+                        System.exit(0);
+                        break;
+                }
+            }else {
+                System.out.println("The order have invalid length, your input should only contains a numbers.");
+                Continue();
+
+            }
+        }else {
+            if (bool.equals("no")){
+                System.exit(0);
+                System.out.println("Quited...");
+            } else {
+                System.out.println("Your input is invalid, yes or no only, please type again");
+                Continue();
+            }
+
+        }
 
     }
 
