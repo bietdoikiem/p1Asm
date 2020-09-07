@@ -28,7 +28,7 @@ public class Converter {
         formats[3] = formatter4;
         Date data = null;
         Date data2 =null;
-        // Iterate through Datr format, match input with the right one and convert it to Date
+        // Iterate through Date format, match input with the right one and convert it to Date
         for (int i=0; i<formats.length;i++){
             try{
                 data2 = data;
@@ -41,6 +41,12 @@ public class Converter {
     }
     public static String DateToStr(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = formatter.format(date);
+        return strDate;
+    }
+
+    public static String StrToMonthYear(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
         String strDate = formatter.format(date);
         return strDate;
     }
