@@ -25,7 +25,7 @@ public class Generator {
         return "001";
     }
     public static void generateLeadReport(){
-        Date current = Date.from(LocalDate.now().atStartOfDay().toInstant(OffsetDateTime.now().getOffset()));
+//        Date current = Date.from(LocalDate.now().atStartOfDay().toInstant(OffsetDateTime.now().getOffset()));
         ArrayList <Lead> LeadArr = CSVManager.getInstance().getLeadAll();
         int curYear = Calendar.getInstance().get(Calendar.YEAR);
         int curMonth = Calendar.getInstance().get(Calendar.MONTH);
@@ -44,23 +44,29 @@ public class Generator {
         for (int i =0;i<LeadArr.size();i++){
             Lead thisLead = LeadArr.get(i);
             Date DoB = thisLead.getDOB();
-            if (Kid.after(DoB)){
+            System.out.println(" Kid: "+Converter.DateToStr(Kid));
+            System.out.println(" Teenage: "+Converter.DateToStr(Teenage));
+            System.out.println(" Growth: "+Converter.DateToStr(Growth));
+            System.out.println(String.valueOf(Kid.after(DoB)));
+            System.out.println(String.valueOf(DoB.after(Teenage)));
+            System.out.println(String.valueOf(DoB.after(Growth)));
+            if (DoB.after(Kid)){
                 leKid++;
 
             }
-            if (DoB.after(Kid) & Teenage.after(DoB)){
+            if (Kid.after(DoB) & DoB.after(Teenage)){
                 leTeen ++;
             }
-            if (DoB.after(Teenage) & Growth.after(DoB)){
+            if (Teenage.after(DoB) & DoB.after(Growth)){
                 leGrowth++;
             }
-            if (DoB.after(Growth)){
+            if (Growth.after(DoB)){
                 leAge ++;
             }
 
         }
-        System.out.println();
-        System.out.println();
+        System.out.println("0-10 (years old)| 10-20(years old)| 20-60(years old)| >60(years old)");
+        System.out.println(leKid+"               | "+leTeen+"               | "+leGrowth+"               |  "+leAge);
 //        System.out.println(curMonth);
 
     }
