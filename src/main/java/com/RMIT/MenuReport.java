@@ -12,7 +12,7 @@ public class MenuReport extends Menu{
         }
         return single_instance;
     }
-    public static void MainMenu(int input){
+    public void MainMenu(int input){
         int i = input;
         if (i==0){
             System.out.println("------Report Manager Page------");
@@ -44,7 +44,7 @@ public class MenuReport extends Menu{
         }else {
             i++;
             System.out.println("Your input option is invalid");
-            MenuLead.MainMenu(i);
+            MenuLead.getInstance().MainMenu(i);
         }
 
     }

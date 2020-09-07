@@ -601,16 +601,16 @@ public class InputGetter {
             if (order.length() == 1){ // using switch to activate a function at a time when user chose the function to activate
                 switch (order){
                     case "1":
-                        Menu.MainMenu(0);
+                        Menu.getInstance().MainMenu(0);
                         break;
                     case "2":
-                        MenuLead.MainMenu(0);
+                        MenuLead.getInstance().MainMenu(0);
                         break;
                     case "3":
-                        MenuInter.MainMenu(0);
+                        MenuInter.getInstance().MainMenu(0);
                         break;
                     case "4":
-                        MenuReport.MainMenu(0);
+                        MenuReport.getInstance().MainMenu(0);
                         break;
                     case "0":
                         System.out.println("Thanks for your work,bye");

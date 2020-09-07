@@ -13,7 +13,7 @@ public class MenuInter extends Menu{
         }
         return single_instance;
     }
-    public static void MainMenu(int input){
+    public void MainMenu(int input){
         int i = input;
         if (i==0){
             System.out.println("------Inter Manager Page------");
@@ -49,7 +49,7 @@ public class MenuInter extends Menu{
         }else {
             i++;
             System.out.println("Your input option is invalid");
-            MenuInter.MainMenu(i);
+            MenuInter.getInstance().MainMenu(i);
         }
     }
     private static void ViewInterAll(){
