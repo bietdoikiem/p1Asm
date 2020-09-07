@@ -1,5 +1,6 @@
 package com.RMIT;
 
+import java.util.Date;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,6 +8,7 @@ import java.util.Calendar;
 public class Main {
 
     public static void main(String[] args) {
+        Menu.getInstance().MainMenu(0);
         // call functions here
         CSVManager csvmanager = CSVManager.getInstance();
         csvmanager.print();
@@ -40,4 +42,6 @@ public class Main {
         Generator.generateInteractionReport(Converter.StrToDate("2020-03-1"), Converter.StrToDate("2020-08-04"));
 
     }
+
+
 }
