@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -16,6 +17,7 @@ import java.util.regex.Matcher;
 public class Validator {
     private static Validator single_instance = null; // make this class singleton for easier to manage
     public Validator(){}
+    private static Scanner sc = new Scanner(System.in);
     public static Validator getInstance() {
         if (single_instance == null) {
             single_instance = new Validator();
@@ -228,6 +230,126 @@ public class Validator {
                         if (order.charAt(j) == order.charAt(i) & j!=i){
                           repeated = true;
                           break;
+                        }
+                    }
+                    if (repeated == true){
+                        return_value[0] = "false";
+                        return_value[1] = "you can only update a feature once in each order";
+                    }else { // in this case, the valid data is true, the message is none and we parse the order to the return value
+                        return_value[0] = "true";
+                        for (int k = 0;k <order.length();k++){
+                            return_value[k+2] = String.valueOf(order.charAt(k));
+                        }
+                    }
+                }
+            }
+        }return  return_value;
+    }
+
+    public String[] getMean(String mean){
+        String[] return_value = new String[2];
+        String return_mean = mean.toLowerCase();
+        switch (return_mean){
+            case "email":
+                return_value[0] = "true";
+                return_value[1] = "email";
+                break;
+            case "face to face":
+                return_value[0] = "true";
+                return_value[1] = "face to face";
+                break;
+            case "phone":
+                return_value[0] = "true";
+                return_value[1] = "phone";
+                break;
+            case "facebook":
+                return_value[0] = "true";
+                return_value[1] = "Social media : Facebook";
+                break;
+            case "twitter":
+                return_value[0] = "true";
+                return_value[1] = "Social media : Twitter";
+                break;
+            case "instagram":
+                return_value[0] = "true";
+                return_value[1] = "Social media : instagram";
+                break;
+            case "zalo":
+                return_value[0] = "true";
+                return_value[1] = "Social media : Zalo";
+                break;
+            default :
+                return_value[0] = "false";
+                return_value[1] = "Can not identify the mean, please type again";
+                break;
+        }
+        return return_value;
+
+    }
+    public String[] getMean(String mean,String type){
+        String[] return_value = new String[2];
+        String return_mean = mean.toLowerCase();
+        switch (type.toLowerCase()){
+            case "new":
+                return_value[0] = "true";
+                return_value[1] = return_mean;
+                break;
+            case "new social network":
+                return_value[0] = "true";
+                return_value[1] = "Social media : " +return_mean;
+                break;
+        }
+        return return_value;
+    }
+    public String[] getPotential(String potential){
+        String [] returnValue = new String[2];
+        switch (potential.toLowerCase()){
+            case "positive":
+               returnValue[0] =  "true";
+               returnValue[1] = "positive";
+               break;
+            case "negative":
+                returnValue[0] =  "true";
+                returnValue[1] = "negative";
+                break;
+            case "neural":
+                returnValue[0] =  "true";
+                returnValue[1] = "neural";
+                break;
+            case "+":
+                returnValue[0] =  "true";
+                returnValue[1] = "positive";
+                break;
+            case "-":
+                returnValue[0] =  "true";
+                returnValue[1] = "negative";
+                break;
+            case "=":
+                returnValue[0] =  "true";
+                returnValue[1] = "neural";
+                break;
+            default:
+                returnValue[0] = "false";
+                returnValue[1] = "Can not identify type of potential, please type again";
+        }
+        return returnValue;
+    }
+    public String[] GetValidatedInterOrder(String order){
+        String[] return_value = new String[order.length()+2]; // Create return value of list order and valid, message of exception data
+        boolean repeated = false;
+        if(order.length() > 4){ // check for order not to be too long
+            return_value[0] = "false";
+            return_value[1] = "Out of order for feature change, you should have maximum of 4 feature change for an order";
+        }else {
+            for (int i =0;i<order.length();i++){ // check for an order in the right number
+                if (order.charAt(i)>'4' | order.charAt(i) < '1'){
+                    return_value[0] = "false";
+                    return_value[1] = "The order number should be between 1 and 4";
+                }else {
+                    for (int j =i; j<order.length();j++){ // check for the order being repeated
+                        if (order.charAt(j) == order.charAt(i) & j!=i){
+                            repeated = true;
+                            break;
                         }
                     }
                     if (repeated == true){

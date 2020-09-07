@@ -1,5 +1,12 @@
 package com.RMIT;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class Generator {
     public static String generateLeadIdNumber() {
         CSVManager csvManager = CSVManager.getInstance();
@@ -16,5 +23,45 @@ public class Generator {
             return String.format("%03d", interId+1);
         }
         return "001";
+    }
+    public static void generateLeadReport(){
+        Date current = Date.from(LocalDate.now().atStartOfDay().toInstant(OffsetDateTime.now().getOffset()));
+        ArrayList <Lead> LeadArr = CSVManager.getInstance().getLeadAll();
+        int curYear = Calendar.getInstance().get(Calendar.YEAR);
+        int curMonth = Calendar.getInstance().get(Calendar.MONTH);
+        int DayOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        int leKid = 0;
+        int leTeen = 0;
+        int leGrowth =0;
+        int leAge = 0;
+        int yearTeen = curYear - 10;
+        int yearAging = curYear - 60;
+        int yearGrowth = curYear - 20;
+        Date Kid = new GregorianCalendar(yearTeen,curMonth,DayOfMonth).getTime();
+        Date Teenage = new GregorianCalendar(yearGrowth,curMonth,DayOfMonth).getTime();
+        Date Growth = new GregorianCalendar(yearAging,curMonth,DayOfMonth).getTime();
+//        Date Te
+        for (int i =0;i<LeadArr.size();i++){
+            Lead thisLead = LeadArr.get(i);
+            Date DoB = thisLead.getDOB();
+            if (Kid.after(DoB)){
+                leKid++;
+
+            }
+            if (DoB.after(Kid) & Teenage.after(DoB)){
+                leTeen ++;
+            }
+            if (DoB.after(Teenage) & Growth.after(DoB)){
+                leGrowth++;
+            }
+            if (DoB.after(Growth)){
+                leAge ++;
+            }
+
+        }
+        System.out.println();
+        System.out.println();
+//        System.out.println(curMonth);
+
     }
 }
