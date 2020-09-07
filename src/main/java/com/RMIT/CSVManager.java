@@ -297,7 +297,8 @@ public class CSVManager  {
             try (
                     Writer writer = Files.newBufferedWriter(Paths.get(INTERACTION_FILE_PATH), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             ) {
-                    String leadId = getLead(inter.getLeadId()).getId();
+                    Lead getLead = getLead(inter.getLeadId());
+                    String leadId = getLead.getId();
                     StatefulBeanToCsv<Interaction> beanToCsv = setupCSVBuilderWriter("inter", writer);
                     beanToCsv.write(inter);
                     System.out.println("Add interaction with " + leadId + " successfully");
@@ -328,7 +329,7 @@ public class CSVManager  {
             }
             String interId = foundInter.getId();
             if(interId != null) {
-                System.out.println("Lead is found");
+                System.out.println("Interaction is found");
                 return foundInter;
             }
             return foundInter;

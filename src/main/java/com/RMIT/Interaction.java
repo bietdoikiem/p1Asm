@@ -31,8 +31,8 @@ public class Interaction {
         this.id = "inter_" + Generator.generateInterIdNumber();
         this.DOI = DOI;
         this.leadId = leadId;
-        this.mean = mean;
-        this.potential = potential;
+        this.mean = mean.toLowerCase();
+        this.potential = potential.toLowerCase();
     }
 
     public String getId() {
