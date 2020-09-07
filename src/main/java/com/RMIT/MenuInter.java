@@ -63,5 +63,6 @@ public class MenuInter extends Menu{
             System.out.println("Potential : " + Inter.getPotential());
             System.out.println("==========================");
         }
+        InputGetter.Continue();
     }
 }

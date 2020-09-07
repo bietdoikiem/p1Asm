@@ -69,6 +69,7 @@ public class Generator {
         }
         System.out.println("0-10 (years old)| 10-20(years old)| 20-60(years old)| >60(years old)");
         System.out.println(leKid + "               | " + leTeen + "               | " + leGrowth + "               |  " + leAge);
+        InputGetter.Continue();
     }
 //        System.out.println(curMonth);
 
@@ -93,6 +94,7 @@ public class Generator {
         }
         System.out.println("Positive \t Neutral \t Negative");
         System.out.println(countPositive + " " + "\t \t \t" + "    " + countNeutral + "\t \t \t " + countNegative);
+        InputGetter.Continue();
     }
 
     public static void generateInteractionReport(Date begin, Date end) {
@@ -124,6 +126,7 @@ public class Generator {
         for (String i: interByMonth.keySet()) {
             System.out.println(i + " " + interByMonth.get(i));
         }
+        InputGetter.Continue();
 
 //        Iterator<Interaction> iterator_1 = myFilteredInters.iterator();
 //        while(iterator_1.hasNext()) {

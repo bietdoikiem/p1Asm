@@ -376,7 +376,7 @@ public class InputGetter {
             System.out.println("Please input the potential by follow the guides below: ");
             System.out.println("Type positive or + for positive potential"); // we allow user to use mathematic operator for convenience
             System.out.println("Type negative or - for negative potential ");
-            System.out.println("Type neural or = for neural potential");
+            System.out.println("Type neutral or = for neutral potential");
             System.out.println(" ");
             Potential = sys_in.nextLine();
             ValidatedPotential = Validator.getInstance().getPotential(Potential);
@@ -587,7 +587,7 @@ public class InputGetter {
 
     }
 
-    private static void Continue(){
+    public static void Continue(){
         System.out.println("Do you want to continue use the system ? , type yes for continue type no for quitting");
         String bool = sys_in.nextLine().toLowerCase();
         if (bool.equals("yes")) {

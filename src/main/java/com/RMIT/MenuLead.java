@@ -65,6 +65,7 @@ public class MenuLead extends Menu{
             System.out.println("Gender: " + lead.getGender());
             System.out.println("==========================");
         }
+        InputGetter.Continue();
     }
 
 }

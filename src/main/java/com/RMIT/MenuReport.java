@@ -31,10 +31,11 @@ public class MenuReport extends Menu{
                     Generator.generateLeadReport();
                     break;
                 case "2":
-
+//                    handle day needed
+//                    Generator.generatePotentialReport();
                     break;
                 case "3":
-
+//                  Generator.generateInteractionReport();
                     break;
                 case "5":
                     System.out.println("See you later, bye");

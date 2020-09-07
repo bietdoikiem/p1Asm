@@ -312,9 +312,9 @@ public class Validator {
                 returnValue[0] =  "true";
                 returnValue[1] = "negative";
                 break;
-            case "neural":
+            case "neutral":
                 returnValue[0] =  "true";
-                returnValue[1] = "neural";
+                returnValue[1] = "neutral";
                 break;
             case "+":
                 returnValue[0] =  "true";
@@ -326,7 +326,7 @@ public class Validator {
                 break;
             case "=":
                 returnValue[0] =  "true";
-                returnValue[1] = "neural";
+                returnValue[1] = "neutral";
                 break;
             default:
                 returnValue[0] = "false";
