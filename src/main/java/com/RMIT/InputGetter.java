@@ -325,7 +325,7 @@ public class InputGetter {
                 return in_mail;
             }
             else {
-                System.out.println("Invalid email input, please type lead phone again");
+                System.out.println("Invalid email input, please type the Email again");
                 System.out.print("Lead email : ");
                 in_mail = sys_in.nextLine();
 
