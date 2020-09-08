@@ -49,4 +49,7 @@ public class MenuReport extends Menu{
         }
 
     }
+    private static void generatePotential(){
+
+    }
 }
