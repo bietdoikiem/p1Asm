@@ -5,14 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Converter {
-//    private static Converter single_instance = null; // make this class singleton for easier to manage
-//    public Converter(){}
-//    public static Converter getInstance() {
-//        if (single_instance == null) {
-//            single_instance = new Converter();
-//        }
-//        return single_instance;
-//    }
+
     public static Date StrToDate(String input) {
         // listing the available date format
 
@@ -36,14 +29,14 @@ public class Converter {
         return data;
     }
     public static String DateToStr(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // format Date into year-month-day string format
         String strDate = formatter.format(date);
         return strDate;
     }
 
     public static String StrToMonthYear(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
-        String strDate = formatter.format(date);
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy"); // format Date into [MONTH] [year] string format
+        String strDate = formatter.format(date); //
         return strDate;
     }
 }

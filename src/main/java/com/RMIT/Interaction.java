@@ -7,6 +7,7 @@ import com.opencsv.bean.CsvDate;
 import java.util.Date;
 
 public class Interaction {
+    // We use annotations CsvBindByName to bind properties to the data's headings of csv file
     @CsvBindByName(column = "id", required = true)
     private String id;
 
