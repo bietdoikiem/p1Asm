@@ -51,12 +51,7 @@ public class Generator {
         for (int i = 0; i < LeadArr.size(); i++) {
             Lead thisLead = LeadArr.get(i);
             Date DoB = thisLead.getDOB();
-            /*System.out.println(" Kid: " + Converter.DateToStr(Kid));
-            System.out.println(" Teenage: " + Converter.DateToStr(Teenage));
-            System.out.println(" Growth: " + Converter.DateToStr(Growth));
-            System.out.println(String.valueOf(Kid.after(DoB)));
-            System.out.println(String.valueOf(DoB.after(Teenage)));
-            System.out.println(String.valueOf(DoB.after(Growth)));*/
+
             if (DoB.after(Kid)) {
                 leKid++;
 

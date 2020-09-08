@@ -111,17 +111,20 @@ public class InputGetter {
             String[] listOfWord = lead_name.split(" ");
             String inputWords = String.join("",listOfWord); // convert the name from multiple words to a string
             System.out.println(inputWords);
-            for(int i =0; i < inputWords.length();i++){ // check if the string converted from input above contain invalid word
+            int i = 0;
+            while(i<inputWords.length()){ // check if the string converted from input above contain invalid word
                 if (Character.isLetter(inputWords.charAt(i)) == false){
                     NotContainInvalidChar = false;
                     break;
                 }else {
                     NotContainInvalidChar = true;
                 }
+                i++;
             }
             if(NotContainInvalidChar == true){ // if the input is valid, breaks the loop
                 break;
             }
+
         }
         System.out.println("\n");
         return lead_name;
@@ -138,14 +141,16 @@ public class InputGetter {
             day = sys_in.nextLine();
             boolean Valid1 = false;
             boolean Valid2 = false;
-            for (int i = 0; i<day.length();i++){
-                if (day.charAt(i) <= '9' & day.charAt(i) >= '0') { // if the character of input are between 1-9
+            int d =0;
+            while (d < day.length()){
+                if (day.charAt(d) <= '9' & day.charAt(d) >= '0') { // if the character of input are between 1-9
                     Valid1 = true;
                 }else { // if the valid input
                     System.out.println("The input contains invalid characters");
                     Valid1 = false;
                     break;
                 }
+                d++;
             }
             if (day.length() > 2 & Integer.parseInt(day) > 31 & Integer.parseInt(day) != 0 ){ // the input should be maximum of 31 ad more than 0
                 System.out.println("Your Day input is invalid, the input should be an integer smaller than 32");
@@ -227,7 +232,7 @@ public class InputGetter {
         }
 
 
-        String DateParse = pday+"/"+pmon+"/"+year; // combined valid day,month, year to a string for parsing
+        String DateParse = year+"/"+pmon+"/"+pday; // combined valid day,month, year to a string for parsing
         System.out.println(DateParse);
         Date DOB = Converter.StrToDate(DateParse);
 
@@ -321,7 +326,7 @@ public class InputGetter {
         String Id = sys_in.nextLine();
         String mean = getMean();
         String potential = getPotential();
-        Date DOI = input_DOI();
+        Date DOI = input_DOI("doi");
 
 
         Interaction thisInteraction = new Interaction(DOI,Id,mean,potential); // create and add new interaction
@@ -339,28 +344,62 @@ public class InputGetter {
         boolean NotValid = true;
         String firstStr = null;
         while (NotValid){
-            System.out.println("Please input the mean of this interaction,\n Type new or new social network for adding new type of means ");
+            System.out.println("Choose an option available from the option list below by typing the num ber associate with it ");
+            System.out.println("1. Email");
+            System.out.println("2. Face to face");
+            System.out.println("3. Phone");
+            System.out.println("4. Social media: Facebook");
+            System.out.println("5. Social media: Twitter");
+            System.out.println("6. Social media: Zalo");
+            System.out.println("7. Social media: Instagram");
+            System.out.println("8. Adding new means: ");
+            System.out.println("9. Adding new means in the field of social media");
+            System.out.println("====================================================================================================");
+            System.out.print("Your choice is: ");
             firstStr = sys_in.nextLine();
             switch (firstStr.toLowerCase()){
-                case "new":
-                    System.out.print("Please input this new type of means ");
-                    System.out.println(" ");
-                    SecondStr = sys_in .nextLine();
+                case "1":
+                    ValidatedMean = Validator.getInstance().getMean("email");
+                    break;
+                case "2":
+                    ValidatedMean = Validator.getInstance().getMean("face to face");
+                    break;
+                case "3":
+                    ValidatedMean = Validator.getInstance().getMean("phone");
+                    break;
+                case "4":
+                    ValidatedMean = Validator.getInstance().getMean("facebook");
+                    break;
+                case "5":
+                    ValidatedMean = Validator.getInstance().getMean("twitter");
+                    break;
+                case "6":
+                    ValidatedMean = Validator.getInstance().getMean("zalo");
+                    break;
+                case "7":
+                    ValidatedMean = Validator.getInstance().getMean("instagram");
+                    break;
+                case "8":
+                    System.out.println("please type this new type of mean:");
+                    SecondStr = sys_in.nextLine();
                     ValidatedMean = Validator.getInstance().getMean(SecondStr,"new");
                     break;
-                case "new social network":
-                    System.out.print("Please input this new type of means ");
-                    System.out.println(" ");
-                    SecondStr = sys_in .nextLine();
+                case "9":
                     ValidatedMean = Validator.getInstance().getMean(SecondStr,"new social network");
                     break;
                 default:
-                    ValidatedMean = Validator.getInstance().getMean(firstStr);
-                    // the message of invalid input cotent only pop up if it's not overlap new type of input ;
-                    if(!Boolean.parseBoolean(ValidatedMean[0]) & !firstStr.equals("new") & !firstStr.equals("new social network")){
-                        System.out.println(ValidatedMean[1]);
+                    try {
+                        int k = Integer.parseInt(firstStr);
+                        if (k>9 |  k<1){
+                            System.out.println("Your input option is out of valid range, it should be an integer in range 1-9");
+                            System.out.println("Let choose the option again");
+                            ValidatedMean[0] = "false";
+                        }
+                    }catch (Exception exception){
+                        System.out.println("Your input option may contain invalid character, please choose the option again");
+                        ValidatedMean[0] = "false";
                     }
-                    break;
+
             }
             NotValid = !Boolean.parseBoolean(ValidatedMean[0]);
         }
@@ -386,25 +425,36 @@ public class InputGetter {
 
     }
 
-    public static Date input_DOI(){
+    public static Date input_DOI(String mode){
         // first time input date of interaction
         // Validate input day
+        String inmode = mode.toLowerCase();
         boolean dayValid = false;
         String day = null;
         while (!dayValid){ // get and validate the input of day
-            System.out.println("Please complete information about Day of Interaction by input these information : ");
+            if(inmode.equals("doi")){
+                System.out.println("Please complete information about Day of Interaction by input these information : ");
+            }
+            if(inmode.equals("begin") ){
+                System.out.println("Please complete information about begin Day by input these information");
+            }
+            if(inmode.equals("end")){
+                System.out.println("Please complete information about the end Day by input these information");
+            }
             System.out.print("Day : ");
             day = sys_in.nextLine();
             boolean Valid1 = false;
             boolean Valid2 = false;
-            for (int i = 0; i<day.length();i++){
-                if (day.charAt(i) <= '9' & day.charAt(i) >= '0') { // if the character of input are between 1-9
+            int d = 0;
+            while (d<day.length()){
+                if (day.charAt(d) <= '9' & day.charAt(d) >= '0') { // if the character of input are between 1-9
                     Valid1 = true;
                 }else { // if the valid input
                     System.out.println("The input contains invalid characters");
                     Valid1 = false;
                     break;
                 }
+                d++;
             }
             if (day.length() > 2 & Integer.parseInt(day) > 31 & Integer.parseInt(day) != 0 ){
                 System.out.println("Your Day input is invalid, the input should be an integer smaller than 32");
@@ -429,14 +479,16 @@ public class InputGetter {
             mon = sys_in.nextLine();
             boolean Validmon1 = false;
             boolean Validmon2 = false;
-            for (int i = 0; i<day.length();i++){
-                if (mon.charAt(i) <= '9' & mon.charAt(i) >= '0') { // if the character of input are between 1-9
+            int m = 0;
+            while (m<mon.length() ){
+                if (mon.charAt(m) <= '9' & mon.charAt(m) >= '0') { // if the character of input are between 1-9
                     Validmon1 = true;
                 }else { // if the valid input
                     System.out.println("The input contains invalid characters");
                     Validmon1 = false;
                     break;
                 }
+                m++;
             }
             if (mon.length() > 2 | Integer.parseInt(mon) > 12 | Integer.parseInt(mon) == 0 ){
                 System.out.println("Your month input is invalid, the input should be an integer smaller than 13");
@@ -465,27 +517,29 @@ public class InputGetter {
             year = sys_in.nextLine();
             boolean Validy1 = false;
             boolean Validy2 = false;
-            for (int i = 0; i<day.length();i++){
-                if (year.charAt(i) <= '9' & year.charAt(i) >= '0') { // if the character of input are between 1-9
+            int y = 0;
+            while (y<year.length()){
+                if (year.charAt(y) <= '9' & year.charAt(y) >= '0') { // if the character of input are between 1-9
                     Validy1 = true;
                 }else { // if the valid input
                     System.out.println("The input contains invalid characters");
                     Validy1 = false;
                     break;
                 }
+                y++;
             }
             // In real life, the interaction data should be updated in days since the interaction happened
             // so that we validate that the year should be as closed as possible to the current years.
-            if (year.length() == 4 & Math.abs(Integer.parseInt(year) - curYear) <=1 & Integer.parseInt(year) <= curYear ){
+            if (year.length() == 4 & Integer.parseInt(year) <= curYear ){
                 Validy2 = true;
             }else {
-                System.out.println("invalid year input, check whether your year input in the future or more than a year from the current time ");
+                System.out.println("invalid year input, check whether your year input in the future ");
                 Validy2 = false;
             }
             yearValid = Validy1&Validy2; // the year only valid if satisfy the condition of having valid character and in the valid time range
         }
 
-        String DateParse = pday+"/"+pmon+"/"+year;
+        String DateParse = year+"/"+pmon+"/"+pday;
         System.out.println(DateParse);
         Date DOI = Converter.StrToDate(DateParse);
         boolean InFuture = true;
@@ -494,7 +548,7 @@ public class InputGetter {
         while (InFuture){ // check if the input is in the future or not
             if(i > 0){
                 System.out.println("your input date is in the future, please type the date of interaction again");
-                DOI = input_DOI();
+                DOI = input_DOI(inmode);
             }
             if (!DOI.after(current)){
                 InFuture = false;
@@ -541,7 +595,7 @@ public class InputGetter {
                             LeadId = getLeadId();
                             break;
                         case "2":
-                            DOI = input_DOI();
+                            DOI = input_DOI("doi");
                             break;
                         case "3":
                             mean = getMean();
@@ -634,5 +688,6 @@ public class InputGetter {
         }
 
     }
+
 
 }
