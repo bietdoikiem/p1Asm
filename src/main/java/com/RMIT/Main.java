@@ -8,6 +8,7 @@ import java.util.Calendar;
 public class Main {
 
     public static void main(String[] args) {
+        //CSVManager csvmanager = CSVManager.getInstance();
         Menu.getInstance().MainMenu(0);
         // call functions here
 //        CSVManager csvmanager = CSVManager.getInstance();
@@ -33,11 +34,11 @@ public class Main {
         //csvmanager.getLead("lead_004");
 /*        for(Lead lead: csvmanager.getLeadAll()) {
             System.out.println("Lead id is: " + lead.getId());
-        }
-
-        for(Interaction inter: csvmanager.getInterAll()) {
-            System.out.println("Inter Id is: " + inter.getId() + " with potential: " + inter.getPotential());
         }*/
+
+//        for(Interaction inter: csvmanager.getInterAll()) {
+//            System.out.println("Inter Id is: " + inter.getId() + " with potential: " + inter.getPotential());
+//        }
         //Generator.generatePotentialReport(Converter.StrToDate("2020-03-01"), Converter.StrToDate("2020-08-04"));
         //Generator.generateInteractionReport(Converter.StrToDate("2020-03-1"), Converter.StrToDate("2020-08-04"));
 

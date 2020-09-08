@@ -1,5 +1,6 @@
 package com.RMIT;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class MenuReport extends Menu{
@@ -32,10 +33,10 @@ public class MenuReport extends Menu{
                     break;
                 case "2":
 //                    handle day needed
-//                    Generator.generatePotentialReport();
+                    PotentialReport();
                     break;
                 case "3":
-//                  Generator.generateInteractionReport();
+                    InteractionReport();
                     break;
                 case "5":
                     System.out.println("See you later, bye");
@@ -49,7 +50,18 @@ public class MenuReport extends Menu{
         }
 
     }
-    private static void generatePotential(){
-
+    private static void PotentialReport(){
+        Date begin = InputGetter.input_DOI("begin");
+        Date end = InputGetter.input_DOI("end");
+        Generator.generatePotentialReport(begin,end);
+        InputGetter.Continue();
     }
+    private static void InteractionReport(){
+        Date begin = InputGetter.input_DOI("begin");
+        Date end = InputGetter.input_DOI("end");
+        Generator.generateInteractionReport(begin,end);
+        InputGetter.Continue();
+    }
+
+
 }
