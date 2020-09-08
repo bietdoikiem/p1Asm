@@ -12,6 +12,9 @@ import java.util.*;
 
 public class Generator {
     private static final CSVManager csvManager = CSVManager.getInstance();
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_RESET = "\u001B[0m";
     public static String generateLeadIdNumber() {
         int leadId = csvManager.getLastLeadIdNumber();
         if (leadId >= 1) {
@@ -26,6 +29,8 @@ public class Generator {
         }
         return "001";
     }
+
+    // Generate lead report by categories of age brackets.
     public static void generateLeadReport() {
 //        Date current = Date.from(LocalDate.now().atStartOfDay().toInstant(OffsetDateTime.now().getOffset()));
         ArrayList<Lead> LeadArr = CSVManager.getInstance().getLeadAll();
@@ -46,12 +51,12 @@ public class Generator {
         for (int i = 0; i < LeadArr.size(); i++) {
             Lead thisLead = LeadArr.get(i);
             Date DoB = thisLead.getDOB();
-            System.out.println(" Kid: " + Converter.DateToStr(Kid));
+            /*System.out.println(" Kid: " + Converter.DateToStr(Kid));
             System.out.println(" Teenage: " + Converter.DateToStr(Teenage));
             System.out.println(" Growth: " + Converter.DateToStr(Growth));
             System.out.println(String.valueOf(Kid.after(DoB)));
             System.out.println(String.valueOf(DoB.after(Teenage)));
-            System.out.println(String.valueOf(DoB.after(Growth)));
+            System.out.println(String.valueOf(DoB.after(Growth)));*/
             if (DoB.after(Kid)) {
                 leKid++;
 
@@ -67,12 +72,25 @@ public class Generator {
             }
 
         }
-        System.out.println("0-10 (years old)| 10-20(years old)| 20-60(years old)| >60(years old)");
-        System.out.println(leKid + "               | " + leTeen + "               | " + leGrowth + "               |  " + leAge);
+        generateLoading(30);
+        //System.out.println("0-10 (years old)| 10-20(years old)| 20-60(years old)| >60(years old)");
+        // Align format of string to matched columns and rows
+        System.out.format("%-20s", "0-10 (years old)");
+        System.out.format("%-20s", "10-20 (years old)");
+        System.out.format("%-20s", "20-60 (years old)");
+        System.out.format("%-20s", ">60 (years old)");
+        System.out.println(" ");
+        //System.out.println(leKid + "               | " + leTeen + "               | " + leGrowth + "               |  " + leAge);
+        System.out.format("%-20s", "      " + leKid);
+        System.out.format("%-20s", "      " + leTeen);
+        System.out.format("%-20s", "      " + leGrowth);
+        System.out.format("%-20s", "      " + leAge);
+        System.out.println(" ");
         InputGetter.Continue();
     }
 //        System.out.println(curMonth);
 
+    // Generate number of potential attitudes (Pos, Neu, Neg) in a time range
     public static void generatePotentialReport(Date begin, Date end) {
         ArrayList<Interaction> myFilteredInters = filterInterByDate(begin, end);
         long countPositive = 0;
@@ -91,11 +109,20 @@ public class Generator {
                 countNegative++;
             }
         }
-        System.out.println("Positive \t Neutral \t Negative");
-        System.out.println(countPositive + " " + "\t \t \t" + "    " + countNeutral + "\t \t \t " + countNegative);
+        generateLoading(30);
+        // Align format of string to matched columns and rows
+        System.out.format("%-18s", "Positive");
+        System.out.format("%-18s", "Neutral");
+        System.out.format("%-18s", "Negative");
+        System.out.println(" ");
+        System.out.format("%-18s", "   "+countPositive);
+        System.out.format("%-18s", "   "+countNeutral);
+        System.out.format("%-18s", "   "+countNegative);
+        System.out.println(" ");
     }
 
-    public static void generateInteractionReport(Date begin, Date end) {
+    // Generate number of interactions monthly report
+    public static void generateInteractionReport(Date begin, Date end)  {
         ArrayList<Interaction> myFilteredInters = filterInterByDate(begin, end);
         LinkedHashMap<String, String> interByMonth = new LinkedHashMap<>();
         //Date configuration for time range
@@ -119,12 +146,19 @@ public class Generator {
             //System.out.println(date);
             startDate.add(Calendar.MONTH, 1);
         }
-
+        generateLoading(50);
+        // Align format of string to matched columns and rows
         for (String i: interByMonth.keySet()) {
-            System.out.println(i + " " + interByMonth.get(i));
+            System.out.format("%-18s", i);
         }
+        System.out.println(" ");
+        for (String i: interByMonth.keySet()) {
+            System.out.format("%-18s", "    " + interByMonth.get(i));
+        }
+        System.out.println(" ");
     }
 
+    // Methods to filter interactions by date range
     public static ArrayList<Interaction> filterInterByDate(Date begin, Date end) {
         ArrayList<Interaction> myInters = csvManager.getInterAll();
         ArrayList<Interaction> myFilteredInters = new ArrayList<>();
@@ -138,5 +172,27 @@ public class Generator {
             }
         }
         return myFilteredInters;
+    }
+    public static void generateLoading(int time) {
+        try {
+            System.out.print(ANSI_GREEN + "[" + ANSI_RESET + "                    ]");
+            System.out.flush(); // the flush method prints it to the screen
+
+            // 11 '\b' chars: 1 for the ']', the rest are for the spaces
+            System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+            System.out.flush();
+            Thread.sleep(time); // just to make it easy to see the changes
+
+            for (int i = 0; i < 20; i++) {
+                System.out.print(ANSI_PURPLE + "#" + ANSI_RESET); //overwrites a space
+                System.out.flush();
+                Thread.sleep(time);
+            }
+            System.out.print(ANSI_GREEN + "] 100% Done!\n" + ANSI_RESET); //overwrites the ']' + adds chars
+            Thread.sleep(400);
+            System.out.flush();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

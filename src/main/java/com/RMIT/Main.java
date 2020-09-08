@@ -1,5 +1,6 @@
 package com.RMIT;
 
+
 import java.util.Date;
 
 import java.text.SimpleDateFormat;
@@ -9,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         //CSVManager csvmanager = CSVManager.getInstance();
-        Menu.getInstance().MainMenu(0);
+        //Menu.getInstance().MainMenu(0);
         // call functions here
 //        CSVManager csvmanager = CSVManager.getInstance();
 //        csvmanager.print();
@@ -39,9 +40,10 @@ public class Main {
 //        for(Interaction inter: csvmanager.getInterAll()) {
 //            System.out.println("Inter Id is: " + inter.getId() + " with potential: " + inter.getPotential());
 //        }
+        //
         //Generator.generatePotentialReport(Converter.StrToDate("2020-03-01"), Converter.StrToDate("2020-08-04"));
-        //Generator.generateInteractionReport(Converter.StrToDate("2020-03-1"), Converter.StrToDate("2020-08-04"));
-
+        //Generator.generateInteractionReport(Converter.StrToDate("2019-03-1"), Converter.StrToDate("2020-09-04"));
+        Generator.generateLeadReport();
     }
 
 
