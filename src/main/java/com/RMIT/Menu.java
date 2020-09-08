@@ -27,7 +27,7 @@ public class Menu {
         System.out.println("1. Execute the lead manager function: ");
         System.out.println("2. Execute the Inter manager function: ");
         System.out.println("3. View the reports : ");
-        System.out.println("4. Quit the systems: ");
+        System.out.println("0. Quit the systems: ");
         System.out.println("================================================================================================ ");
         System.out.print("Your option is: ");
         String option = sys_in.nextLine();
@@ -42,7 +42,7 @@ public class Menu {
                 case "3":
                     MenuReport.getInstance().MainMenu(0);
                     break;
-                case "4":
+                case "0":
                     System.out.println("See you later, bye");
                     System.exit(0);
                     break;

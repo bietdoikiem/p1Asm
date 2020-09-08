@@ -37,14 +37,14 @@ public class Generator {
         int curYear = Calendar.getInstance().get(Calendar.YEAR);
         int curMonth = Calendar.getInstance().get(Calendar.MONTH);
         int DayOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        int leKid = 0;
-        int leTeen = 0;
-        int leGrowth = 0;
-        int leAge = 0;
+        int leKid = 0; // number of Lead younger than 10
+        int leTeen = 0; // number of lead between 10 and 20 years old
+        int leGrowth = 0; // number of lead bet ween 20 and 60 years old
+        int leAge = 0; // number of people at the age of beyond 60
         int yearTeen = curYear - 10;
         int yearAging = curYear - 60;
         int yearGrowth = curYear - 20;
-        Date Kid = new GregorianCalendar(yearTeen, curMonth, DayOfMonth).getTime();
+        Date Kid = new GregorianCalendar(yearTeen, curMonth, DayOfMonth).getTime(); // get the date to identify if someone is at 10 years old
         Date Teenage = new GregorianCalendar(yearGrowth, curMonth, DayOfMonth).getTime();
         Date Growth = new GregorianCalendar(yearAging, curMonth, DayOfMonth).getTime();
 //        Date Te

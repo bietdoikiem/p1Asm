@@ -13,23 +13,23 @@ public class MenuReport extends Menu{
         }
         return single_instance;
     }
-    public void MainMenu(int input){
+    public void MainMenu(int input){ // the menu to access report
         int i = input;
         if (i==0){
             System.out.println("------Report Manager Page------");
         }
-        System.out.println("Choose an option from the option list below by typing the number associate with it(1-4): ");
+        System.out.println("Choose an option from the option list below by typing the number associate with it(1-4): "); // display the option to the user
         System.out.println("1. View Lead by age report : ");
         System.out.println("2. View Interaction by potential report : ");
         System.out.println("3. View Interaction by time : ");
-        System.out.println("4. Quit the systems : ");
+        System.out.println("0. Quit the systems : ");
         System.out.println("================================================================================================ ");
         System.out.print("Your option is: ");
         String option = sys_in.nextLine();
         if (option.length()==1){
             switch (option){
                 case "1":
-                    Generator.generateLeadReport();
+                    Generator.generateLeadReport(); // generate report of Lead by age
                     break;
                 case "2":
 //                    handle day needed
@@ -38,7 +38,7 @@ public class MenuReport extends Menu{
                 case "3":
                     InteractionReport();
                     break;
-                case "5":
+                case "0":
                     System.out.println("See you later, bye");
                     System.exit(0);
                     break;
@@ -51,16 +51,16 @@ public class MenuReport extends Menu{
 
     }
     private static void PotentialReport(){
-        Date begin = InputGetter.input_DOI("begin");
+        Date begin = InputGetter.input_DOI("begin"); // get the begin and end date from user
         Date end = InputGetter.input_DOI("end");
-        Generator.generatePotentialReport(begin,end);
-        InputGetter.Continue();
+        Generator.generatePotentialReport(begin,end); // display the potential report
+        InputGetter.Continue(); // let the user choose to continue or quit
     }
     private static void InteractionReport(){
-        Date begin = InputGetter.input_DOI("begin");
-        Date end = InputGetter.input_DOI("end");
+        Date begin = InputGetter.input_DOI("begin"); // get the begin and end date from user
+        Date end = InputGetter.input_DOI("end"); // display the Interaction report
         Generator.generateInteractionReport(begin,end);
-        InputGetter.Continue();
+        InputGetter.Continue(); // let the user choose to continue or quit
     }
 
 

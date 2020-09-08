@@ -17,18 +17,18 @@ public class MenuLead extends Menu{
         int i = input;
         if (i==0){
             System.out.println("------Lead Manager Page------");
-        }
+        } // Display option for user
         System.out.println("Choose an option from the option list below by typing the number associate with it(1-5): ");
         System.out.println("1. View all Lead details: ");
         System.out.println("2. Adding a new Lead: ");
         System.out.println("3. Update a Lead : ");
         System.out.println("4. Delete a lead : ");
-        System.out.println("5. Quit the system : ");
+        System.out.println("0. Quit the system : ");
         System.out.println("================================================================================================ ");
         System.out.print("Your option is: ");
         String option = sys_in.nextLine();
         if (option.length()==1){
-            switch (option){
+            switch (option){ // activate function associate with input
                 case "1":
                     MenuLead.ViewLeadAll();
                     break;
@@ -41,7 +41,7 @@ public class MenuLead extends Menu{
                 case "4":
                     InputGetter.DeleteLead();
                     break;
-                case "5":
+                case "0":
                     System.out.println("See you later, bye");
                     System.exit(0);
                     break;
@@ -53,8 +53,8 @@ public class MenuLead extends Menu{
         }
 
     }
-    private static void ViewLeadAll(){
-        ArrayList <Lead> ListOfLead = CSVManager.getInstance().getLeadAll();
+    private static void ViewLeadAll(){ // view all the lead's infor mation indetails
+        ArrayList <Lead> ListOfLead = CSVManager.getInstance().getLeadAll(); // get and loop through the array of lead
         for (int i =0;i < ListOfLead.size();i++){
             Lead lead = ListOfLead.get(i);
             System.out.println("ID: " + lead.getId());

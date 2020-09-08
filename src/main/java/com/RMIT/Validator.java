@@ -25,34 +25,34 @@ public class Validator {
         return single_instance;
     }
     public boolean validate_email  (String input_mail){ // validate email form
-        String email_regex =  "^[a-zA-Z0-9_+&*-]+(?:\\."+
+        String email_regex =  "^[a-zA-Z0-9_+&*-]+(?:\\."+ // create the form for validate email
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$";
         Pattern pat = Pattern.compile(email_regex);
         if (input_mail == null){
-            return false;}
+            return false;}// the email is null then it's not valid
         else{
-            return pat.matcher(input_mail).matches();
+            return pat.matcher(input_mail).matches(); // return the nonnull email's validity
         }
     }
 
     public static String return_mail (String input_mail){
         boolean valid = Validator.getInstance().validate_email(input_mail);
-        if (valid == true){
+        if (valid == true){// return email if the email is valid
             return input_mail;
         } else {
-            System.out.println("Invalid input mail");
+            System.out.println("Invalid input mail");// show the message if the email is not valid
             return null;
         }
     }
 
-    private static boolean Validate_phone(String input_phone){ // validate phone by format of 9-11 intergers combined
-        if (input_phone != null){
-            if(input_phone.length()<= 11 && input_phone.length()>=9){
+    private static boolean Validate_phone(String input_phone){ // validate phone by format of a string combined of 9-11 integers
+        if (input_phone != null){ //
+            if(input_phone.length()<= 11 && input_phone.length()>=9){// validate the length of the phone number by vietnamese format
                 for(int i =0;i<input_phone.length();i++){
                     char char_i = input_phone.charAt(i);
-                    if (char_i < '0' || char_i >'9' ){
+                    if (char_i < '0' || char_i >'9' ){ // the phone number should have character is integers
                         return false;
                     }
                 }
@@ -61,7 +61,7 @@ public class Validator {
             return false;
         }
         else {
-            System.out.println("You didn't type the phone number yet");
+            System.out.println("You didn't type the phone number yet"); // give the message if the input was null
             return false;
         }
     }
@@ -83,7 +83,7 @@ public class Validator {
                     .build();
             Iterator<Lead> csvLeadIterator = csvToBean.iterator();
 
-            if (adjusted == "phone"){
+            if (adjusted == "phone"){ // print the lead that have this phone
                 while (csvLeadIterator.hasNext()) {
                     Lead lead = csvLeadIterator.next();
                     if (lead.getPhone().equals(input_data)){
@@ -100,7 +100,7 @@ public class Validator {
 
                 }
             }
-            if (adjusted == "email"){
+            if (adjusted == "email"){ // print the email that have this email
                 while (csvLeadIterator.hasNext()){
                     Lead lead = csvLeadIterator.next();
                     if (lead.getEmail().equals(input_data)){
@@ -130,7 +130,7 @@ public class Validator {
         return true;
     }
 
-    public String[] get_phone_validated (String input_phone){ // get the phone number after two type of validated
+    public String[] get_phone_validated (String input_phone){ // get the phone number after validating twice
         boolean valid_phone_form =Validator.getInstance().Validate_phone(input_phone);
         boolean phone_not_overlap = Validator.not_overlap_data(input_phone,"phone");
 
@@ -150,7 +150,7 @@ public class Validator {
 
     }
 
-    public String[] get_email_validated (String input_mail){ // get the phone number after two type of validated
+    public String[] get_email_validated (String input_mail){ // get the email after validating twice
         boolean valid_mail_form =Validator.getInstance().validate_email(input_mail);
         boolean mail_not_overlap = Validator.not_overlap_data(input_mail,"email");
 
@@ -187,26 +187,26 @@ public class Validator {
 
     }
 
-    public String[] get_validated_address(String input_address){
+    public String[] get_validated_address(String input_address){ //validate the address
         String[] return_value = new String[2];
-        boolean ready = Validator.getInstance().Validate_address(input_address);
+        boolean ready = Validator.getInstance().Validate_address(input_address); //return true if the address at the form of number - string or (number + character) - String
         if (  ready == true){
             return_value[0] = input_address;
             return_value[1] = "true";
         }else{
             return_value[1] = "false";
         }
-        return return_value;
+        return return_value; // return the parameter if address was validated
     }
 
     public String[] get_validated_leadid (String input_id){ //Check and return the valid Lead_id for create new data
         String[] return_value = new String[2];
-        boolean ready = !Validator.not_overlap_data(input_id,"id");
-        if (ready == true){
+        boolean ready = !Validator.not_overlap_data(input_id,"id"); // check if the id exists or not
+        if (ready == true){ // the id is valid if the id were existed
             return_value[0] = input_id;
             return_value[1] = "true";
         }else {
-            System.out.println("Invalid lead_id, please retype ID");
+            System.out.println("Invalid lead_id, please retype ID"); // print the message to notify that the id is invalid
             return_value[1] = "false";
         }
         return return_value;
@@ -246,10 +246,10 @@ public class Validator {
         }return  return_value;
     }
 
-    public String[] getMean(String mean){
+    public String[] getMean(String mean){ // function for validate the mean of interaction
         String[] return_value = new String[2];
-        String return_mean = mean.toLowerCase();
-        switch (return_mean){
+        String return_mean = mean.toLowerCase(); // make the mean to lowercase
+        switch (return_mean){ //return the mean by pre-defined case
             case "email":
                 return_value[0] = "true";
                 return_value[1] = "email";
@@ -286,25 +286,25 @@ public class Validator {
         return return_value;
 
     }
-    public String[] getMean(String mean,String type){
+    public String[] getMean(String mean,String type){ // function overode to add new Mean
         String[] return_value = new String[2];
         String return_mean = mean.toLowerCase();
         switch (type.toLowerCase()){
-            case "new":
+            case "new": // new mean that not relate to social media
                 return_value[0] = "true";
                 return_value[1] = return_mean;
                 break;
-            case "new social network":
+            case "new social network":// add mean in case of social media, Ex : Quora, discord
                 return_value[0] = "true";
                 return_value[1] = "Social media : " +return_mean;
                 break;
         }
         return return_value;
     }
-    public String[] getPotential(String potential){
+    public String[] getPotential(String potential){ // get input from user and return validated Potential
         String [] returnValue = new String[2];
         switch (potential.toLowerCase()){
-            case "positive":
+            case "positive": // if input were in the traditional string type
                returnValue[0] =  "true";
                returnValue[1] = "positive";
                break;
@@ -316,7 +316,7 @@ public class Validator {
                 returnValue[0] =  "true";
                 returnValue[1] = "neutral";
                 break;
-            case "+":
+            case "+": // the input will be mapped as in the more convenience way
                 returnValue[0] =  "true";
                 returnValue[1] = "positive";
                 break;
@@ -328,7 +328,7 @@ public class Validator {
                 returnValue[0] =  "true";
                 returnValue[1] = "neutral";
                 break;
-            default:
+            default: // return false for input not matched the defined case
                 returnValue[0] = "false";
                 returnValue[1] = "Can not identify type of potential, please type again";
         }

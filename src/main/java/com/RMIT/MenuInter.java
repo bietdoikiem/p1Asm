@@ -23,7 +23,7 @@ public class MenuInter extends Menu{
         System.out.println("2. Adding a new Interaction: ");
         System.out.println("3. Update an Interaction : ");
         System.out.println("4. Delete an Interaction : ");
-        System.out.println("5. Quit the system : ");
+        System.out.println("0. Quit the system : ");
         System.out.println("================================================================================================ ");
         System.out.print("Your option is: ");
         String option = sys_in.nextLine();
@@ -41,7 +41,7 @@ public class MenuInter extends Menu{
                 case "4":
                     InputGetter.DeleteInter();
                     break;
-                case "5":
+                case "0":
                     System.out.println("See you later, bye");
                     System.exit(0);
                     break;

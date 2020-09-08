@@ -2,6 +2,7 @@ package com.RMIT;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ public class InputGetter {
     public static void InputLead(){ // this function used for adding lead
     // getting lead information from user
     System.out.println("New lead's information");
-    String Name = inputName();
+    String Name = inputName(); // getting all needed information of a list
     String phone = inputPhone();
     Date DOB = inputDOB();
     boolean gender = inputGend();
@@ -67,7 +68,7 @@ public class InputGetter {
             }else { // the order is valid
                 for (int i = 0;i < orderIn.length();i++){
                     String orderCase = String.valueOf(orderIn.charAt(i)) ;
-                    switch (orderCase){
+                    switch (orderCase){ // get the new value of feature that will be updated
                         case "1" :
                             Name = inputName();
                             break;
@@ -98,7 +99,37 @@ public class InputGetter {
     public static void DeleteLead(){ // function to delete an lead by ID
         System.out.println("Enter the id of lead to delete"); // get the ID from user
         String Id = sys_in.nextLine();
-        CSVManager.getInstance().deleteLead(Id);
+        ArrayList <Interaction> allInter = CSVManager.getInstance().getInterAll();
+        ArrayList <Interaction> InterRelate = new ArrayList<Interaction>();
+        String choice = null;
+        for (int i = 0; i <allInter.size();i++){
+            Interaction thisInter = allInter.get(i);
+            if(thisInter.getLeadId().equals(Id)){
+                InterRelate.add(thisInter);
+            }
+        }
+        if(InterRelate.size()>0){ // if the lead have interaction relate to it, display all interaction in detailed
+            System.out.println("If you delete the the lead with the ID you just input");
+            System.out.println("The following Interaction will be deleted :");
+            System.out.println("=======================================================");
+            int index = 0;
+            while (index < InterRelate.size()){
+                Interaction Inter = InterRelate.get(index);
+                System.out.println("The Interaction with ID : "+Inter.getId());
+                System.out.println("It's Mean : "+ Inter.getMean());
+                System.out.println("It's Potential : "+ Inter.getPotential());
+                System.out.println("It's Date : "+ Converter.DateToStr(Inter.getDOI()));
+                System.out.println("=======================================================");
+                index++;
+            }
+        }
+        System.out.println("Are you sure you want to delete this Lead ? "); // instruct user to confirm deleting a lead
+        System.out.println("1. Yes");
+        System.out.println("2. No");
+        choice = sys_in.nextLine();
+        if(choice.equals("1")) {
+            CSVManager.getInstance().deleteLead(Id);
+        }
         Continue();
     }
 
@@ -645,12 +676,12 @@ public class InputGetter {
         System.out.println("Do you want to continue use the system ? , type yes for continue type no for quitting");
         String bool = sys_in.nextLine().toLowerCase();
         if (bool.equals("yes")) {
-            System.out.println("Please choose a function you want to continue, one character input only:");
-            System.out.println("Type 1 for go back to the Main menu");
-            System.out.println("Type 2 for go to the Lead Manager Page");
-            System.out.println("Type 3 for go to the Interaction Manager Page");
-            System.out.println("Type 4 for go to the Report Manager Page");
-            System.out.println("Type 0 quit");
+            System.out.println("Enter your decision by type in the number associated with that option :");
+            System.out.println("1. Go to the Main menu");
+            System.out.println("2. Go to the Lead Manager Page");
+            System.out.println("3. Go to the Interaction Manager Page");
+            System.out.println("4. Go to the Report Manager Page");
+            System.out.println("0. Quit");
             String order = sys_in.nextLine();
             if (order.length() == 1){ // using switch to activate a function at a time when user chose the function to activate
                 switch (order){
