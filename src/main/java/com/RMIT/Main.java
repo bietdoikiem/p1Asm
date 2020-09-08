@@ -11,6 +11,4 @@ public class Main {
     public static void main(String[] args) {
         //CSVManager csvmanager = CSVManager.getInstance();
     }
-
-
 }
