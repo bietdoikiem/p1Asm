@@ -90,16 +90,13 @@ public class Generator {
             if(inter.getPotential().equals("negative")) {
                 countNegative++;
             }
-
         }
         System.out.println("Positive \t Neutral \t Negative");
         System.out.println(countPositive + " " + "\t \t \t" + "    " + countNeutral + "\t \t \t " + countNegative);
-        InputGetter.Continue();
     }
 
     public static void generateInteractionReport(Date begin, Date end) {
         ArrayList<Interaction> myFilteredInters = filterInterByDate(begin, end);
-        ArrayList<String> myMonths = new ArrayList<>();
         LinkedHashMap<String, String> interByMonth = new LinkedHashMap<>();
         //Date configuration for time range
         Calendar startDate = Calendar.getInstance();
@@ -126,14 +123,6 @@ public class Generator {
         for (String i: interByMonth.keySet()) {
             System.out.println(i + " " + interByMonth.get(i));
         }
-        InputGetter.Continue();
-
-//        Iterator<Interaction> iterator_1 = myFilteredInters.iterator();
-//        while(iterator_1.hasNext()) {
-//            Interaction inter = iterator_1.next();
-//
-//        }
-
     }
 
     public static ArrayList<Interaction> filterInterByDate(Date begin, Date end) {
@@ -142,8 +131,10 @@ public class Generator {
         Iterator<Interaction> iterator_1 = myInters.iterator();
         while(iterator_1.hasNext()) {
             Interaction inter_1 = iterator_1.next();
+            //System.out.println(inter_1.getDOI().getTime() + " " + begin.getTime() + " " + end.getTime());
             if(inter_1.getDOI().getTime() >= begin.getTime() && inter_1.getDOI().getTime() <= end.getTime()) {
                 myFilteredInters.add(inter_1);
+                //System.out.println(inter_1.getId());
             }
         }
         return myFilteredInters;
