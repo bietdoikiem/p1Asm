@@ -1,33 +1,31 @@
 package com.RMIT;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Generator {
     private static final CSVManager csvManager = CSVManager.getInstance();
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m"; // set constant for color code of console text
+    public static final String ANSI_PURPLE = "\u001B[35m"; // set constant for color code of console text
+    public static final String ANSI_RESET = "\u001B[0m"; // set constant for color code of console text
     public static String generateLeadIdNumber() {
         int leadId = csvManager.getLastLeadIdNumber();
-        if (leadId >= 1) {
-            return String.format("%03d", leadId+1);
+        if (leadId >= 1) { // check if there has been one lead in the list
+            return String.format("%03d", leadId+1);  // return String number in the format of "000"
         }
-        return "001";
+        return "001"; // if not return the first ID
     }
     public static String generateInterIdNumber() {
         int interId = csvManager.getLastInterIdNumber();
-        if (interId >= 1) {
-            return String.format("%03d", interId+1);
+        if (interId >= 1) { // check if there has been one interaction in the list
+            return String.format("%03d", interId+1); // return String number in the format of "000"
         }
-        return "001";
+        return "001"; // if not return the first ID
     }
 
     // Generate lead report by categories of age brackets.
@@ -68,7 +66,6 @@ public class Generator {
 
         }
         generateLoading(30);
-        //System.out.println("0-10 (years old)| 10-20(years old)| 20-60(years old)| >60(years old)");
         // Align format of string to matched columns and rows
         System.out.format("%-20s", "0-10 (years old)");
         System.out.format("%-20s", "10-20 (years old)");
@@ -83,19 +80,19 @@ public class Generator {
         System.out.println(" ");
         InputGetter.Continue();
     }
-//        System.out.println(curMonth);
 
     // Generate number of potential attitudes (Pos, Neu, Neg) in a time range
     public static void generatePotentialReport(Date begin, Date end) {
-        ArrayList<Interaction> myFilteredInters = filterInterByDate(begin, end);
+        ArrayList<Interaction> myFilteredInters = filterInterByDate(begin, end); // retrieve filtered list based on time range
+        // set up count variables for each potential type
         long countPositive = 0;
         long countNeutral = 0;
         long countNegative = 0;
-        Iterator<Interaction> iterator_1 = myFilteredInters.iterator();
+        Iterator<Interaction> iterator_1 = myFilteredInters.iterator(); // create Iterator to traverse through filtered list
         while(iterator_1.hasNext()) {
-            Interaction inter = iterator_1.next();
+            Interaction inter = iterator_1.next(); // retrieve the next object in the list
             if(inter.getPotential().equals("positive")) {
-                countPositive++;
+                countPositive++; // increase if found
             }
             if(inter.getPotential().equals("neutral")) {
                 countNeutral++;
@@ -118,20 +115,21 @@ public class Generator {
 
     // Generate number of interactions monthly report
     public static void generateInteractionReport(Date begin, Date end)  {
-        ArrayList<Interaction> myFilteredInters = filterInterByDate(begin, end);
-        LinkedHashMap<String, String> interByMonth = new LinkedHashMap<>();
+        ArrayList<Interaction> myFilteredInters = filterInterByDate(begin, end); // retrieve filtered list
+        LinkedHashMap<String, String> interByMonth = new LinkedHashMap<>(); // create linked hash map for storing key, value data type
         //Date configuration for time range
         Calendar startDate = Calendar.getInstance();
         startDate.setTime(begin);
         Calendar endDate = Calendar.getInstance();
         endDate.setTime(end);
-        //
+        // traverse through months and years including the data involved
         while(startDate.before(endDate)) {
             long count = 0;
             String date = Converter.StrToMonthYear(startDate.getTime());
             for(Interaction inter: myFilteredInters) {
-                Calendar interDate = Calendar.getInstance();
-                interDate.setTime(inter.getDOI());
+                Calendar interDate = Calendar.getInstance(); // create Calendar object for interaction date
+                interDate.setTime(inter.getDOI()); // set the time for the object
+                // check if the date of interaction matches the month and year
                 if(interDate.get(Calendar.MONTH) == startDate.get(Calendar.MONTH) && interDate.get(Calendar.YEAR) == interDate.get(Calendar.YEAR)) {
                     count += 1;
                 }

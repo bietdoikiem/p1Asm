@@ -6,7 +6,8 @@ import com.opencsv.bean.CsvDate;
 import java.util.Date;
 
 public class Lead {
-    @CsvBindByName(column="id", required = true) // Annotations to match with CSV's header.
+    // We use annotations CsvBindByName to bind properties to the data's headings of csv file
+    @CsvBindByName(column="id", required = true) // Annotations to match with Csv's header.
     private String id;
 
     @CsvBindByName(column="name", required = true)
@@ -30,7 +31,6 @@ public class Lead {
 
     public Lead() {}
 
-    // write object to CSV file
     public Lead(String name, Date DOB, Boolean gender, String phone, String email, String address) {
         this.id = "lead_" + Generator.generateLeadIdNumber();
         this.name = name;
@@ -42,7 +42,6 @@ public class Lead {
     }
 
 
-    // parse object from CSV file
 
 
     public String getId() {
