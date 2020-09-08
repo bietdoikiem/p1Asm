@@ -128,6 +128,7 @@ public class InputGetter {
         System.out.println("2. No");
         choice = sys_in.nextLine();
         if(choice.equals("1")) {
+            Generator.generateLoading(50);
             CSVManager.getInstance().deleteLead(Id);
         }
         Continue();
@@ -667,6 +668,7 @@ public class InputGetter {
     public static void DeleteInter(){
         System.out.println("please type in the interID to delete");
         String InterID = sys_in.nextLine();
+        Generator.generateLoading(30);
         CSVManager.getInstance().deleteInter(InterID);
         Continue();
 

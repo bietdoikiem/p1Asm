@@ -54,6 +54,7 @@ public class MenuInter extends Menu{
     }
     private static void ViewInterAll(){
         ArrayList<Interaction> ListOfInter = CSVManager.getInstance().getInterAll();
+        Generator.generateLoading(50);
         for (int i =0;i < ListOfInter.size();i++){
             Interaction Inter = ListOfInter.get(i);
             System.out.println("Interaction ID :" + Inter.getId());

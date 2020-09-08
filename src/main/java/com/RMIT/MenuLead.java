@@ -55,6 +55,7 @@ public class MenuLead extends Menu{
     }
     private static void ViewLeadAll(){ // view all the lead's infor mation indetails
         ArrayList <Lead> ListOfLead = CSVManager.getInstance().getLeadAll(); // get and loop through the array of lead
+        Generator.generateLoading(50);
         for (int i =0;i < ListOfLead.size();i++){
             Lead lead = ListOfLead.get(i);
             System.out.println("ID: " + lead.getId());
