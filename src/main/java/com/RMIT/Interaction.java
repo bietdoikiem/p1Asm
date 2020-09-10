@@ -42,6 +42,9 @@ public class Interaction {
     public Date getDOI() {
         return DOI;
     }
+    public String getDOIString() {
+        return Converter.DateToFullFormatStr(DOI);
+    }
 
     public void setDOI(Date DOI) {
         this.DOI = DOI;

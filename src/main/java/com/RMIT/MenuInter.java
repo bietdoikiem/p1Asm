@@ -16,9 +16,9 @@ public class MenuInter extends Menu{
     public void MainMenu(int input){
         int i = input;
         if (i==0){
-            System.out.println("------Inter Manager Page------");
+            System.out.println("------Interaction Manager Page------");
         }
-        System.out.println("Choose an option from the option list below by typing the number associate with it(1-5): ");
+        System.out.println("Choose an option from the option list below by typing the number associate with it (1-5): ");
         System.out.println("1. View all Inter details: ");
         System.out.println("2. Adding a new Interaction: ");
         System.out.println("3. Update an Interaction : ");
@@ -60,7 +60,7 @@ public class MenuInter extends Menu{
             System.out.println("Interaction ID :" + Inter.getId());
             System.out.println("Lead ID: " + Inter.getLeadId());
             System.out.println("Mean : " + Inter.getMean());
-            System.out.println("Date of interaction : " + Converter.DateToStr(Inter.getDOI()));
+            System.out.println("Date of interaction : " + Inter.getDOIString());
             System.out.println("Potential : " + Inter.getPotential());
             System.out.println("==========================");
         }

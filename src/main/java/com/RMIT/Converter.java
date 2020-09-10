@@ -34,9 +34,15 @@ public class Converter {
         return strDate;
     }
 
-    public static String StrToMonthYear(Date date) {
+    public static String DateToMonthYearStr(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy"); // format Date into [MONTH] [year] string format
         String strDate = formatter.format(date); //
+        return strDate;
+    }
+
+    public static String DateToFullFormatStr(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM d yyyy"); // format Date into [Month's name] [date] [year] format
+        String strDate = formatter.format(date);
         return strDate;
     }
 }

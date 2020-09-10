@@ -60,7 +60,7 @@ public class Lead {
         return DOB;
     }
     public String getDOBString() {
-        return Converter.DateToStr(this.DOB);
+        return Converter.DateToFullFormatStr(this.DOB);
     }
 
     public void setDOB(Date DOB) {

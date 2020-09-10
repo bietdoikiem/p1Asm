@@ -125,7 +125,7 @@ public class Generator {
         // traverse through months and years including the data involved
         while(startDate.before(endDate)) {
             long count = 0;
-            String date = Converter.StrToMonthYear(startDate.getTime());
+            String date = Converter.DateToMonthYearStr(startDate.getTime()); // convert to [Month's name] - [Year] format
             for(Interaction inter: myFilteredInters) {
                 Calendar interDate = Calendar.getInstance(); // create Calendar object for interaction date
                 interDate.setTime(inter.getDOI()); // set the time for the object
