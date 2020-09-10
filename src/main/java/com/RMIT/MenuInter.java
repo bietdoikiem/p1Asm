@@ -57,10 +57,10 @@ public class MenuInter extends Menu{
         Generator.generateLoading(50);
         for (int i =0;i < ListOfInter.size();i++){
             Interaction Inter = ListOfInter.get(i);
-            System.out.println("Interaction ID :" + Inter.getId());
-            System.out.println("Lead ID: " + Inter.getLeadId());
-            System.out.println("Mean : " + Inter.getMean());
+            System.out.println("Interaction ID : " + Inter.getId());
             System.out.println("Date of interaction : " + Inter.getDOIString());
+            System.out.println("Lead ID : " + Inter.getLeadId());
+            System.out.println("Mean : " + Inter.getMean());
             System.out.println("Potential : " + Inter.getPotential());
             System.out.println("==========================");
         }

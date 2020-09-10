@@ -58,12 +58,13 @@ public class MenuLead extends Menu{
         Generator.generateLoading(50);
         for (int i =0;i < ListOfLead.size();i++){
             Lead lead = ListOfLead.get(i);
-            System.out.println("ID: " + lead.getId());
+            System.out.println("ID : " + lead.getId());
             System.out.println("Name : " + lead.getName());
-            System.out.println("Email : " + lead.getEmail());
+            System.out.println("Date of birth : " + lead.getDOBString());
+            System.out.println("Gender : " + lead.getGender());
             System.out.println("PhoneNo : " + lead.getPhone());
-            System.out.println("DOB: " + lead.getDOBString());
-            System.out.println("Gender: " + lead.getGender());
+            System.out.println("Email : " + lead.getEmail());
+            System.out.println("Address : " + lead.getAddress());
             System.out.println("==========================");
         }
         InputGetter.Continue();
