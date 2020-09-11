@@ -45,4 +45,10 @@ public class Converter {
         String strDate = formatter.format(date);
         return strDate;
     }
+    public static String BooleanToGender(Boolean bool) {
+        if(bool) {
+            return "male";
+        }
+        return "female";
+    }
 }

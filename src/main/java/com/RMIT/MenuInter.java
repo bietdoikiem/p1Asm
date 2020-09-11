@@ -39,7 +39,7 @@ public class MenuInter extends Menu{
                     InputGetter.updateInter();
                     break;
                 case "4":
-                    InputGetter.DeleteInter();
+                    InputGetter.confirmDeleteInter();
                     break;
                 case "0":
                     System.out.println("See you later, bye");
@@ -55,15 +55,25 @@ public class MenuInter extends Menu{
     private static void ViewInterAll(){
         ArrayList<Interaction> ListOfInter = CSVManager.getInstance().getInterAll();
         Generator.generateLoading(50);
+        System.out.println("===========================================List of Interactions==============================================");
+        //set up columns table format for displaying data
+        System.out.format("%-20s", "ID");
+        System.out.format("%-30s", "Date of interaction");
+        System.out.format("%-20s", "Lead's ID");
+        System.out.format("%-30s", "Mean");
+        System.out.format("%-20s", "Potential");
+        System.out.println(" ");
         for (int i =0;i < ListOfInter.size();i++){
             Interaction Inter = ListOfInter.get(i);
-            System.out.println("Interaction ID : " + Inter.getId());
-            System.out.println("Date of interaction : " + Inter.getDOIString());
-            System.out.println("Lead ID : " + Inter.getLeadId());
-            System.out.println("Mean : " + Inter.getMean());
-            System.out.println("Potential : " + Inter.getPotential());
-            System.out.println("==========================");
+            System.out.format("%-20s", Inter.getId());
+            System.out.format("%-30s", Inter.getDOIString());
+            System.out.format("%-20s", Inter.getLeadId());
+            System.out.format("%-30s", Inter.getMean());
+            System.out.format("%-20s", Inter.getPotential());
+            System.out.println(" ");
         }
+        System.out.println("=============================================================================================================");
+        System.out.println(" ");
         InputGetter.Continue();
     }
 }

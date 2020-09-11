@@ -39,7 +39,7 @@ public class MenuLead extends Menu{
                     InputGetter.updateLead();
                     break;
                 case "4":
-                    InputGetter.DeleteLead();
+                    InputGetter.confirmDeleteLead();
                     break;
                 case "0":
                     System.out.println("See you later, bye");
@@ -56,17 +56,29 @@ public class MenuLead extends Menu{
     private static void ViewLeadAll(){ // view all the lead's information in details
         ArrayList <Lead> ListOfLead = CSVManager.getInstance().getLeadAll(); // get and loop through the array of lead
         Generator.generateLoading(50);
+        //set up columns table format for displaying data
+        System.out.println("======================================================================================List of Leads=========================================================================================");
+        System.out.format("%-20s", "ID");
+        System.out.format("%-35s", "Name");
+        System.out.format("%-35s", "Date of birth");
+        System.out.format("%-20s", "Gender");
+        System.out.format("%-20s", "PhoneNo");
+        System.out.format("%-40s", "Email");
+        System.out.format("%-35s", "Address");
+        System.out.println(" ");
         for (int i =0;i < ListOfLead.size();i++){
             Lead lead = ListOfLead.get(i);
-            System.out.println("ID : " + lead.getId());
-            System.out.println("Name : " + lead.getName());
-            System.out.println("Date of birth : " + lead.getDOBString());
-            System.out.println("Gender : " + lead.getGender());
-            System.out.println("PhoneNo : " + lead.getPhone());
-            System.out.println("Email : " + lead.getEmail());
-            System.out.println("Address : " + lead.getAddress());
-            System.out.println("==========================");
+            System.out.format("%-20s", lead.getId());
+            System.out.format("%-35s", lead.getName());
+            System.out.format("%-35s", lead.getDOBString());
+            System.out.format("%-20s", Converter.BooleanToGender(lead.getGender()));
+            System.out.format("%-20s", lead.getPhone());
+            System.out.format("%-40s",  lead.getEmail());
+            System.out.format("%-35s", lead.getAddress());
+            System.out.println(" ");
         }
+        System.out.println("==============================================================================================================================================================================================");
+        System.out.println(" ");
         InputGetter.Continue();
     }
 

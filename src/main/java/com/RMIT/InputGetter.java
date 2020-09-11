@@ -96,7 +96,7 @@ public class InputGetter {
 
     }
 
-    public static void DeleteLead(){ // function to delete an lead by ID
+    public static void confirmDeleteLead(){ // function to delete an lead by ID
         System.out.println("Enter the id of lead to delete"); // get the ID from user
         String Id = sys_in.nextLine();
         ArrayList <Interaction> allInter = CSVManager.getInstance().getInterAll();
@@ -111,17 +111,27 @@ public class InputGetter {
         if(InterRelate.size()>0){ // if the lead have interaction relate to it, display all interaction in detailed
             System.out.println("If you delete the the lead with the ID you just input");
             System.out.println("The following Interaction will be deleted :");
-            System.out.println("=======================================================");
+            System.out.println("========================================List of Related Interactions===========================================");
+            //set up columns table format for displaying data
+            System.out.format("%-20s", "ID");
+            System.out.format("%-30s", "Date of interaction");
+            System.out.format("%-20s", "Lead's ID");
+            System.out.format("%-30s", "Mean");
+            System.out.format("%-20s", "Potential");
+            System.out.println(" ");
             int index = 0;
             while (index < InterRelate.size()){
                 Interaction Inter = InterRelate.get(index);
-                System.out.println("The Interaction with ID : "+Inter.getId());
-                System.out.println("It's Mean : "+ Inter.getMean());
-                System.out.println("It's Potential : "+ Inter.getPotential());
-                System.out.println("It's Date : "+ Converter.DateToStr(Inter.getDOI()));
-                System.out.println("=======================================================");
+                System.out.format("%-20s", Inter.getId());
+                System.out.format("%-30s", Inter.getDOIString());
+                System.out.format("%-20s", Inter.getLeadId());
+                System.out.format("%-30s", Inter.getMean());
+                System.out.format("%-20s", Inter.getPotential());
+                System.out.println(" ");
                 index++;
             }
+            System.out.println("===============================================================================================================");
+            System.out.println(" ");
         }
         System.out.println("Are you sure you want to delete this Lead ? "); // instruct user to confirm deleting a lead
         System.out.println("1. Yes");
@@ -665,7 +675,7 @@ public class InputGetter {
         return LeadID;
     }
 
-    public static void DeleteInter(){
+    public static void confirmDeleteInter(){
         System.out.println("please type in the interID to delete");
         String InterID = sys_in.nextLine();
         Generator.generateLoading(30);
