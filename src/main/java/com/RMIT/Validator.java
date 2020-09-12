@@ -170,7 +170,7 @@ public class Validator {
 
     }
 
-    public boolean Validate_address (String input_address){ // validate address as form interger and string combined
+    private static boolean Validate_address (String input_address){ // validate address as form interger and string combined
         String[] List_word = input_address.split(" ");
         if (List_word.length >= 2 ){
             String a = List_word[0];
@@ -189,7 +189,7 @@ public class Validator {
 
     public String[] get_validated_address(String input_address){ //validate the address
         String[] return_value = new String[2];
-        boolean ready = Validator.getInstance().Validate_address(input_address); //return true if the address at the form of number - string or (number + character) - String
+        boolean ready = Validate_address(input_address); //return true if the address at the form of number - string or (number + character) - String
         if (  ready == true){
             return_value[0] = input_address;
             return_value[1] = "true";
