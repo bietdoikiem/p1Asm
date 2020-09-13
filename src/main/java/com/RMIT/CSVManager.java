@@ -244,8 +244,7 @@ public class CSVManager implements LeadManagement, InterManagement  {
         }
     }
 
-    //Create OpenCSV Builder to write data to specific csv file
-
+    // ----------------------------------- INTERACTION HANDLING PART ---------------------------- //
 
     public void addInter(Interaction inter)  {
             try ( // create buffer stream of csv file with "write" mode
