@@ -18,10 +18,11 @@ import java.util.Date;
 import java.util.Iterator;
 
 
-public class CSVManager  {
+public class CSVManager implements LeadManagement, InterManagement  {
     private static CSVManager single_instance = null;
     private static final String LEAD_FILE_PATH = "src/main/resources/leads.csv";
     private static final String INTERACTION_FILE_PATH = "src/main/resources/interactions.csv";
+    private static final CSVBuilder csvBuilder = CSVBuilder.getInstance();
 
     private CSVManager() {}
     // initialize singleton pattern
@@ -76,7 +77,7 @@ public class CSVManager  {
         try ( // create buffer stream of csv file with "write" mode
                 Writer writer = Files.newBufferedWriter(Paths.get(LEAD_FILE_PATH), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         ){
-            StatefulBeanToCsv<Lead> beanToCsv = setupCSVBuilderWriter("lead", writer); // call Builder for writing data
+            StatefulBeanToCsv<Lead> beanToCsv = csvBuilder.setupCSVBuilderWriter("lead", writer); // call Builder for writing data
             beanToCsv.write(lead); // write data using builder
             System.out.println("Add lead successfully");
         } catch (IOException e) {
@@ -93,7 +94,7 @@ public class CSVManager  {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(LEAD_FILE_PATH));
         ){
-            CsvToBean<Lead> csvToBean = setupCSVBuilderReader("lead", reader); // create builder to read data
+            CsvToBean<Lead> csvToBean = csvBuilder.setupCSVBuilderReader("lead", reader); // create builder to read data
             Lead foundLead = null; // placeholder for found lead
             Iterator<Lead> csvLeadIterator = csvToBean.iterator(); // create Iterator to traverse through list of Lead data
             while (csvLeadIterator.hasNext()) {
@@ -118,7 +119,7 @@ public class CSVManager  {
                 Reader reader = Files.newBufferedReader(Paths.get(LEAD_FILE_PATH));
 
         ){
-            CsvToBean<Lead> csvToBean = setupCSVBuilderReader("lead", reader); // create builder to read data
+            CsvToBean<Lead> csvToBean = csvBuilder.setupCSVBuilderReader("lead", reader); // create builder to read data
             ArrayList<Lead> myLeads = new ArrayList<>(); // placeholder array list to store retrieved data
             Iterator<Lead> csvLeadIterator = csvToBean.iterator(); // create Iterator to traverse list data
 
@@ -139,7 +140,7 @@ public class CSVManager  {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(LEAD_FILE_PATH));
                 ){
-            CsvToBean<Lead> csvToBean = setupCSVBuilderReader("lead", reader); // create builder to read data
+            CsvToBean<Lead> csvToBean = csvBuilder.setupCSVBuilderReader("lead", reader); // create builder to read data
             Iterator<Lead> csvLeadIterator = csvToBean.iterator(); // create Iterator to traverse data
             String lastId = ""; // placeholder for last ID of lead's list
             while (csvLeadIterator.hasNext()) {
@@ -167,7 +168,7 @@ public class CSVManager  {
             }
             if (foundLead != null) {
                 addFile("lead"); // Recreating CSV file for overwriting new modified data.
-                StatefulBeanToCsv<Lead> beanToCsv = setupCSVBuilderWriter("lead", writer);
+                StatefulBeanToCsv<Lead> beanToCsv = csvBuilder.setupCSVBuilderWriter("lead", writer);
                 //Save any changes to the object if has one or many
                 foundLead.setName(name);
                 foundLead.setDOB(DOB);
@@ -213,7 +214,7 @@ public class CSVManager  {
                 addFile("lead"); // Recreating CSV file for overwriting new modified data.
                 myLeads.remove(foundLead);
                 //Initialize Writer for Lead list
-                StatefulBeanToCsv<Lead> beanToCsv = setupCSVBuilderWriter("lead",writer);
+                StatefulBeanToCsv<Lead> beanToCsv = csvBuilder.setupCSVBuilderWriter("lead",writer);
                 beanToCsv.write(myLeads); // Write new Leads list to CSV file
                 // loop through lists to acquire interactions involved with the found lead.
                 while(iter.hasNext()) {
@@ -225,7 +226,7 @@ public class CSVManager  {
                 }
                 if(removedInter > 0) { // check if if there are any deleted interactions for rewriting purpose
                     //Initialize Writer for Inter list
-                    StatefulBeanToCsv<Interaction> beanToCsvInter = setupCSVBuilderWriter("inter", interWriter);
+                    StatefulBeanToCsv<Interaction> beanToCsvInter = csvBuilder.setupCSVBuilderWriter("inter", interWriter);
                     addFile("inter"); // rewrite interaction csv file
                     beanToCsvInter.write(myInters); // Write new Inters list to CSV file
                 }
@@ -244,58 +245,7 @@ public class CSVManager  {
     }
 
     //Create OpenCSV Builder to write data to specific csv file
-    public StatefulBeanToCsv setupCSVBuilderWriter(String data, Writer writer) {
-        if(data.equals("lead")) { // Check for kind of data (lead) to be written
-            ColumnPositionMappingStrategy<Lead> strategy = new ColumnPositionMappingStrategy<Lead>(); // Initialize mapping strategy for data columns
-            strategy.setType(Lead.class); // Set strategy mapping to be matched with properties of class Lead
-            String[] memberFieldsToBindTo = {"id", "name", "DOB", "gender", "phone", "email", "address"}; // String array to store data columns
-            strategy.setColumnMapping(memberFieldsToBindTo); // set column mapping to match data columns
-            StatefulBeanToCsv<Lead> beanToCsv = new StatefulBeanToCsvBuilder<Lead>(writer) // call Csv Builder object from OpenCSV library
-                    .withMappingStrategy(strategy) // set strategy mapping for builder
-                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER) // ignore quote characters when writing
-                    .build(); // successfully build the object
-            return beanToCsv;
-        }
-         else if (data.equals("inter")) { // Check for kind of data (interaction) to be written
-                ColumnPositionMappingStrategy<Interaction> strategy = new ColumnPositionMappingStrategy<Interaction>(); // Initialize mapping strategy for data columns
-                strategy.setType(Interaction.class);  // Set strategy mapping to be matched with properties of class Interaction
-                String[] memberFieldsToBindTo = {"id", "DOI", "leadId", "mean", "potential"}; // String array to store data columns
-                strategy.setColumnMapping(memberFieldsToBindTo); // set column mapping to match data columns
-                StatefulBeanToCsv<Interaction> beanToCsv = new StatefulBeanToCsvBuilder<Interaction>(writer) // call Csv Builder object from OpenCSV library
-                        .withMappingStrategy(strategy) // set strategy mapping for builder
-                        .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER) // ignore quote characters when writing
-                        .build(); // successfully build the object
-                return beanToCsv;
-        }
-        return null;
-    }
-    //Create OpenCSV Reader to read data from specific csv file
-    public CsvToBean setupCSVBuilderReader(String data, Reader reader) {
-        if (data.equals("lead")) { // Check for kind of data (Lead) to be read
-            ColumnPositionMappingStrategy<Lead> strategy = new ColumnPositionMappingStrategy<>(); // Initialize mapping strategy for data columns
-            strategy.setType(Lead.class); // Set strategy mapping to be matched with properties of class Lead
-            String[] memberFieldsToBindTo = {"id", "name", "DOB", "gender", "phone", "email", "address"}; // String array to store data columns
-            strategy.setColumnMapping(memberFieldsToBindTo); // set column mapping to match data columns
-            CsvToBean<Lead> csvToBean = new CsvToBeanBuilder<Lead>(reader)
-                    .withMappingStrategy(strategy) // set strategy mapping for builder
-                    .withSkipLines(1) // ignore empty lines
-                    .withIgnoreLeadingWhiteSpace(true) // ignore leading white space
-                    .build(); // successfully build the object
-            return csvToBean;
-        } else if (data.equals("inter")) { // Check for kind of data (Interaction) to be read
-                ColumnPositionMappingStrategy<Interaction> strategy = new ColumnPositionMappingStrategy<>(); // Initialize mapping strategy for data columns
-                strategy.setType(Interaction.class);  // Set strategy mapping to be matched with properties of class Interaction
-                String[] memberFieldsToBindTo = {"id", "DOI", "leadId", "mean", "potential"}; // String array to store data columns
-                strategy.setColumnMapping(memberFieldsToBindTo); // set column mapping to match data columns
-                CsvToBean<Interaction> csvToBean = new CsvToBeanBuilder<Interaction>(reader) // call Csv Builder object from OpenCSV library
-                        .withMappingStrategy(strategy) // set strategy mapping for builder
-                        .withSkipLines(1) // ignore empty lines
-                        .withIgnoreLeadingWhiteSpace(true) // ignore leading white space
-                        .build(); // successfully build the object
-                return csvToBean;
-        }
-        return null;
-        }
+
 
     public void addInter(Interaction inter)  {
             try ( // create buffer stream of csv file with "write" mode
@@ -303,7 +253,7 @@ public class CSVManager  {
             ) {
                     Lead getLead = getLead(inter.getLeadId()); // retrieve valid lead through entered lead's id.
                     String leadId = getLead.getId(); // retrieve lead id from lead csv file
-                    StatefulBeanToCsv<Interaction> beanToCsv = setupCSVBuilderWriter("inter", writer); // create builder for writing interaction csv file
+                    StatefulBeanToCsv<Interaction> beanToCsv = csvBuilder.setupCSVBuilderWriter("inter", writer); // create builder for writing interaction csv file
                     beanToCsv.write(inter); // write added interaction to the csv file
                     System.out.println("Add interaction with " + leadId + " successfully");
             } catch (IOException e) {
@@ -322,7 +272,7 @@ public class CSVManager  {
         try ( // create buffer stream of csv file with "read" mode
                 Reader reader = Files.newBufferedReader(Paths.get(INTERACTION_FILE_PATH));
         ) {
-            CsvToBean<Interaction> csvToBean = setupCSVBuilderReader("inter", reader); // create builder to read data for interaction file
+            CsvToBean<Interaction> csvToBean = csvBuilder.setupCSVBuilderReader("inter", reader); // create builder to read data for interaction file
             Interaction foundInter = null; // create placeholder object
             Iterator<Interaction> csvLeadIterator = csvToBean.iterator(); // create Iterator object for traversing list data purpose
             // iterate through list of interactions
@@ -347,7 +297,7 @@ public class CSVManager  {
         try ( // create buffer stream of csv file with "read" mode
                 Reader reader = Files.newBufferedReader(Paths.get(INTERACTION_FILE_PATH));
         ){
-            CsvToBean<Interaction> csvToBean = setupCSVBuilderReader("inter", reader); // create builder to read data
+            CsvToBean<Interaction> csvToBean = csvBuilder.setupCSVBuilderReader("inter", reader); // create builder to read data
             ArrayList<Interaction> myInters = new ArrayList<>(); // placeholder array list for storing later retrieving data
             Iterator<Interaction> csvLeadIterator = csvToBean.iterator(); // setup iterator for traversing data
             while (csvLeadIterator.hasNext()) {
@@ -367,7 +317,7 @@ public class CSVManager  {
         try ( // create buffer stream of csv file with "read" mode
                 Reader reader = Files.newBufferedReader(Paths.get(INTERACTION_FILE_PATH));
                 ){
-            CsvToBean<Interaction> csvToBean = setupCSVBuilderReader("inter", reader); // create builder to read data
+            CsvToBean<Interaction> csvToBean = csvBuilder.setupCSVBuilderReader("inter", reader); // create builder to read data
             Iterator<Interaction> csvLeadIterator = csvToBean.iterator(); // create iterator for traversing data
             String lastId = ""; // placeholder for the last id string
             while (csvLeadIterator.hasNext()) {
@@ -396,7 +346,7 @@ public class CSVManager  {
             if (foundInter != null) {
                 addFile("inter"); // Recreating CSV file for overwriting new modified data.
                 // Mapping data's column to Lead's properties
-                StatefulBeanToCsv<Interaction> beanToCsv = setupCSVBuilderWriter("inter",writer); // create builder to write data
+                StatefulBeanToCsv<Interaction> beanToCsv = csvBuilder.setupCSVBuilderWriter("inter",writer); // create builder to write data
                 //Save any changes to the object
                 foundInter.setDOI(DOI);
                 foundInter.setLeadId(leadId);
@@ -435,7 +385,7 @@ public class CSVManager  {
                 addFile("inter"); // Recreating CSV file for overwriting new modified data.
                 myInters.remove(foundInter);
                 // Mapping data's column to Lead's properties
-                StatefulBeanToCsv<Interaction> beanToCsv = setupCSVBuilderWriter("inter", writer); // create builder to write data
+                StatefulBeanToCsv<Interaction> beanToCsv = csvBuilder.setupCSVBuilderWriter("inter", writer); // create builder to write data
                 beanToCsv.write(myInters); // write new data after deleting one
                 System.out.println("Delete successfully");
             } else {
