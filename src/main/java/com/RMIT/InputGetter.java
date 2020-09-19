@@ -165,6 +165,8 @@ public class InputGetter {
             }
             if(NotContainInvalidChar == true){ // if the input is valid, breaks the loop
                 break;
+            }else {
+                System.out.println("Your input contains invalid character, please type the lead Name again");
             }
 
         }
@@ -295,7 +297,6 @@ public class InputGetter {
             System.out.println(" ");
             if  (gender.equals("male")){ // if input is male
                 gend = true;
-                System.out.println("it worked");
                 break; // break the loop if the input match one of two valid condition
             }
             if (gender.equals("female")){ // if input is female
@@ -427,6 +428,8 @@ public class InputGetter {
                     ValidatedMean = Validator.getInstance().getMean(SecondStr,"new");
                     break;
                 case "9":
+                    System.out.println("please type this new type of mean:");
+                    SecondStr = sys_in.nextLine();
                     ValidatedMean = Validator.getInstance().getMean(SecondStr,"new social network");
                     break;
                 default:
